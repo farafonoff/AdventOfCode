@@ -1,0 +1,1 @@
+solutions to AoC. Some has constant 'puzzle' inside (values are 1 and 2), others has two sources.
