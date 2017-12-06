@@ -27,7 +27,7 @@ contents.forEach(puz => {
         distribute(puz);
         pd = puz.join('|');
     } while (!hm.has(pd));
-    console.log(op);
-    console.log(op - hm.get(pd));
+    console.log(`p1 answer ${op}`);
+    console.log(`p2 answer ${op - hm.get(pd)}`);
 })
 
