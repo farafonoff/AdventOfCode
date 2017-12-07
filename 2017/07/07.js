@@ -7,4 +7,6 @@ const _ = require('lodash')
 //var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0);
 var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 
-console.log(contents);
+contents.forEach(line => {
+    console.log(line);
+})
