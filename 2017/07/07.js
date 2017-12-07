@@ -62,12 +62,6 @@ function getWeight(n) {
                 ans += rest;
             }
         })
-        /*upWeights1.forEach(w => {
-            if (w != upWeights1[0]) {
-                balanced = false;
-
-            }
-        })*/
         upWeights1.sort();
         let unik = _.uniq(upWeights1);
         if (unik.length > 1) {
@@ -79,10 +73,6 @@ function getWeight(n) {
             let upNode = upWeights.indexOf(uweight);
             if (ans2<0) {
                 ans2 = weights[upNode] + oweight-uweight;
-/*                console.log(oweight-uweight);
-                console.log(verts[upNode]);
-                console.log(verts[n]);
-                console.log(upWeights1);*/
             }
         }
     } else {
