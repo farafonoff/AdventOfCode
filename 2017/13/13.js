@@ -15,8 +15,34 @@ function decimalToHex(d, padding) {
 }
 
 //var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0);
-var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
+var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/: /).map(Number));
 
-contents.forEach(line => {
-    console.log(line);
-})
+function severity(lines, delay, cc) {
+    //console.log(delay);
+    let ans = 0;
+    try {
+        lines.forEach(line => {
+            let t = (line[1]-1)*2;
+            let caught = (line[0]+delay)%t===0;
+            //console.log(line);
+            //console.log(caught);
+            ans += (caught)?line[0]*line[1]:0;
+            //console.log(cc);
+            if (cc&&caught) {
+                throw 1000;
+            }
+        })    
+    } catch (ex) {
+        return ex;
+    }
+    return ans;
+}
+
+let delay = 0;
+console.log(severity(contents, 0));
+let sev = severity(contents, delay);
+while(sev>0) {
+    ++delay;
+    sev = severity(contents, delay, true);
+}
+console.log(delay);
