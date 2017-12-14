@@ -1,0 +1,755 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'nodejs-chinese-remainder' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.5
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData nodejs-chinese-remainder
+8 silly fetchNamedPackageData nodejs-chinese-remainder
+9 silly mapToRegistry name nodejs-chinese-remainder
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry data Result {
+12 silly mapToRegistry   raw: 'nodejs-chinese-remainder',
+12 silly mapToRegistry   scope: null,
+12 silly mapToRegistry   escapedName: 'nodejs-chinese-remainder',
+12 silly mapToRegistry   name: 'nodejs-chinese-remainder',
+12 silly mapToRegistry   rawSpec: '',
+12 silly mapToRegistry   spec: 'latest',
+12 silly mapToRegistry   type: 'tag' }
+13 silly mapToRegistry uri https://registry.npmjs.org/nodejs-chinese-remainder
+14 verbose request uri https://registry.npmjs.org/nodejs-chinese-remainder
+15 verbose request no auth needed
+16 info attempt registry request try #1 at 09:57:36
+17 verbose request id b6afe066d70aa101
+18 http request GET https://registry.npmjs.org/nodejs-chinese-remainder
+19 http 200 https://registry.npmjs.org/nodejs-chinese-remainder
+20 verbose headers { 'content-type': 'application/json; charset=UTF-8',
+20 verbose headers   server: 'UploadServer',
+20 verbose headers   'cache-control': 'max-age=300',
+20 verbose headers   'last-modified': 'Mon, 8 Feb 2016 17:49:13 GMT',
+20 verbose headers   etag: '"56b8d519-19c8"',
+20 verbose headers   'content-encoding': 'gzip',
+20 verbose headers   'content-length': '1619',
+20 verbose headers   'accept-ranges': 'bytes',
+20 verbose headers   date: 'Wed, 13 Dec 2017 05:57:36 GMT',
+20 verbose headers   via: '1.1 varnish',
+20 verbose headers   age: '0',
+20 verbose headers   connection: 'keep-alive',
+20 verbose headers   'x-served-by': 'cache-ams4148-AMS',
+20 verbose headers   'x-cache': 'MISS',
+20 verbose headers   'x-cache-hits': '0',
+20 verbose headers   'x-timer': 'S1513144657.642647,VS0,VE325',
+20 verbose headers   vary: 'Accept-Encoding, Accept' }
+21 silly get cb [ 200,
+21 silly get   { 'content-type': 'application/json; charset=UTF-8',
+21 silly get     server: 'UploadServer',
+21 silly get     'cache-control': 'max-age=300',
+21 silly get     'last-modified': 'Mon, 8 Feb 2016 17:49:13 GMT',
+21 silly get     etag: '"56b8d519-19c8"',
+21 silly get     'content-encoding': 'gzip',
+21 silly get     'content-length': '1619',
+21 silly get     'accept-ranges': 'bytes',
+21 silly get     date: 'Wed, 13 Dec 2017 05:57:36 GMT',
+21 silly get     via: '1.1 varnish',
+21 silly get     age: '0',
+21 silly get     connection: 'keep-alive',
+21 silly get     'x-served-by': 'cache-ams4148-AMS',
+21 silly get     'x-cache': 'MISS',
+21 silly get     'x-cache-hits': '0',
+21 silly get     'x-timer': 'S1513144657.642647,VS0,VE325',
+21 silly get     vary: 'Accept-Encoding, Accept' } ]
+22 verbose get saving nodejs-chinese-remainder to C:\Users\farafonoff\AppData\Roaming\npm-cache\registry.npmjs.org\nodejs-chinese-remainder\.cache.json
+23 verbose correctMkdir C:\Users\farafonoff\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+24 silly install normalizeTree
+25 silly loadCurrentTree Finishing
+26 silly loadIdealTree Starting
+27 silly install loadIdealTree
+28 silly cloneCurrentTree Starting
+29 silly install cloneCurrentTreeToIdealTree
+30 silly cloneCurrentTree Finishing
+31 silly loadShrinkwrap Starting
+32 silly install loadShrinkwrap
+33 silly loadShrinkwrap Finishing
+34 silly loadAllDepsIntoIdealTree Starting
+35 silly install loadAllDepsIntoIdealTree
+36 silly resolveWithNewModule nodejs-chinese-remainder@0.0.4 checking installable status
+37 silly cache add args [ 'nodejs-chinese-remainder', null ]
+38 verbose cache add spec nodejs-chinese-remainder
+39 silly cache add parsed spec Result {
+39 silly cache add   raw: 'nodejs-chinese-remainder',
+39 silly cache add   scope: null,
+39 silly cache add   escapedName: 'nodejs-chinese-remainder',
+39 silly cache add   name: 'nodejs-chinese-remainder',
+39 silly cache add   rawSpec: '',
+39 silly cache add   spec: 'latest',
+39 silly cache add   type: 'tag' }
+40 silly addNamed nodejs-chinese-remainder@latest
+41 verbose addNamed "latest" is being treated as a dist-tag for nodejs-chinese-remainder
+42 info addNameTag [ 'nodejs-chinese-remainder', 'latest' ]
+43 silly mapToRegistry name nodejs-chinese-remainder
+44 silly mapToRegistry using default registry
+45 silly mapToRegistry registry https://registry.npmjs.org/
+46 silly mapToRegistry data Result {
+46 silly mapToRegistry   raw: 'nodejs-chinese-remainder',
+46 silly mapToRegistry   scope: null,
+46 silly mapToRegistry   escapedName: 'nodejs-chinese-remainder',
+46 silly mapToRegistry   name: 'nodejs-chinese-remainder',
+46 silly mapToRegistry   rawSpec: '',
+46 silly mapToRegistry   spec: 'latest',
+46 silly mapToRegistry   type: 'tag' }
+47 silly mapToRegistry uri https://registry.npmjs.org/nodejs-chinese-remainder
+48 verbose addNameTag registry:https://registry.npmjs.org/nodejs-chinese-remainder not in flight; fetching
+49 verbose get https://registry.npmjs.org/nodejs-chinese-remainder not expired, no request
+50 silly addNameTag next cb for nodejs-chinese-remainder with tag latest
+51 silly addNamed nodejs-chinese-remainder@0.0.4
+52 verbose addNamed "0.0.4" is a plain semver version for nodejs-chinese-remainder
+53 silly mapToRegistry name nodejs-chinese-remainder
+54 silly mapToRegistry using default registry
+55 silly mapToRegistry registry https://registry.npmjs.org/
+56 silly mapToRegistry data Result {
+56 silly mapToRegistry   raw: 'nodejs-chinese-remainder',
+56 silly mapToRegistry   scope: null,
+56 silly mapToRegistry   escapedName: 'nodejs-chinese-remainder',
+56 silly mapToRegistry   name: 'nodejs-chinese-remainder',
+56 silly mapToRegistry   rawSpec: '',
+56 silly mapToRegistry   spec: 'latest',
+56 silly mapToRegistry   type: 'tag' }
+57 silly mapToRegistry uri https://registry.npmjs.org/nodejs-chinese-remainder
+58 verbose addRemoteTarball https://registry.npmjs.org/nodejs-chinese-remainder/-/nodejs-chinese-remainder-0.0.4.tgz not in flight; adding
+59 verbose addRemoteTarball [ 'https://registry.npmjs.org/nodejs-chinese-remainder/-/nodejs-chinese-remainder-0.0.4.tgz',
+59 verbose addRemoteTarball   '9e8cd6f55b149d823f381b32f1f32549c468061c' ]
+60 info retry fetch attempt 1 at 09:57:37
+61 info attempt registry request try #1 at 09:57:37
+62 http fetch GET https://registry.npmjs.org/nodejs-chinese-remainder/-/nodejs-chinese-remainder-0.0.4.tgz
+63 http fetch 200 https://registry.npmjs.org/nodejs-chinese-remainder/-/nodejs-chinese-remainder-0.0.4.tgz
+64 silly fetchAndShaCheck shasum 9e8cd6f55b149d823f381b32f1f32549c468061c
+65 verbose addTmpTarball C:\Users\FARAFO~1\AppData\Local\Temp\npm-5164-fa8a0901\registry.npmjs.org\nodejs-chinese-remainder\-\nodejs-chinese-remainder-0.0.4.tgz not in flight; adding
+66 verbose addTmpTarball already have metadata; skipping unpack for nodejs-chinese-remainder@0.0.4
+67 verbose correctMkdir C:\Users\farafonoff\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+68 silly cache afterAdd nodejs-chinese-remainder@0.0.4
+69 verbose afterAdd C:\Users\farafonoff\AppData\Roaming\npm-cache\nodejs-chinese-remainder\0.0.4\package\package.json not in flight; writing
+70 verbose correctMkdir C:\Users\farafonoff\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+71 verbose afterAdd C:\Users\farafonoff\AppData\Roaming\npm-cache\nodejs-chinese-remainder\0.0.4\package\package.json written
+72 silly fetchNamedPackageData bignum
+73 silly mapToRegistry name bignum
+74 silly mapToRegistry using default registry
+75 silly mapToRegistry registry https://registry.npmjs.org/
+76 silly mapToRegistry data Result {
+76 silly mapToRegistry   raw: 'bignum',
+76 silly mapToRegistry   scope: null,
+76 silly mapToRegistry   escapedName: 'bignum',
+76 silly mapToRegistry   name: 'bignum',
+76 silly mapToRegistry   rawSpec: '',
+76 silly mapToRegistry   spec: 'latest',
+76 silly mapToRegistry   type: 'tag' }
+77 silly mapToRegistry uri https://registry.npmjs.org/bignum
+78 verbose request uri https://registry.npmjs.org/bignum
+79 verbose request no auth needed
+80 info attempt registry request try #1 at 09:57:37
+81 http request GET https://registry.npmjs.org/bignum
+82 http 200 https://registry.npmjs.org/bignum
+83 verbose headers { 'content-type': 'application/json; charset=UTF-8',
+83 verbose headers   server: 'UploadServer',
+83 verbose headers   'cache-control': 'max-age=300',
+83 verbose headers   'last-modified': 'Fri, 6 Oct 2017 20:48:27 GMT',
+83 verbose headers   etag: '"59d7ec1b-a99b"',
+83 verbose headers   'content-encoding': 'gzip',
+83 verbose headers   'content-length': '6476',
+83 verbose headers   'accept-ranges': 'bytes',
+83 verbose headers   date: 'Wed, 13 Dec 2017 05:57:37 GMT',
+83 verbose headers   via: '1.1 varnish',
+83 verbose headers   age: '6004',
+83 verbose headers   connection: 'keep-alive',
+83 verbose headers   'x-served-by': 'cache-ams4148-AMS',
+83 verbose headers   'x-cache': 'HIT',
+83 verbose headers   'x-cache-hits': '1',
+83 verbose headers   'x-timer': 'S1513144657.441577,VS0,VE1',
+83 verbose headers   vary: 'Accept-Encoding, Accept' }
+84 silly get cb [ 200,
+84 silly get   { 'content-type': 'application/json; charset=UTF-8',
+84 silly get     server: 'UploadServer',
+84 silly get     'cache-control': 'max-age=300',
+84 silly get     'last-modified': 'Fri, 6 Oct 2017 20:48:27 GMT',
+84 silly get     etag: '"59d7ec1b-a99b"',
+84 silly get     'content-encoding': 'gzip',
+84 silly get     'content-length': '6476',
+84 silly get     'accept-ranges': 'bytes',
+84 silly get     date: 'Wed, 13 Dec 2017 05:57:37 GMT',
+84 silly get     via: '1.1 varnish',
+84 silly get     age: '6004',
+84 silly get     connection: 'keep-alive',
+84 silly get     'x-served-by': 'cache-ams4148-AMS',
+84 silly get     'x-cache': 'HIT',
+84 silly get     'x-cache-hits': '1',
+84 silly get     'x-timer': 'S1513144657.441577,VS0,VE1',
+84 silly get     vary: 'Accept-Encoding, Accept' } ]
+85 verbose get saving bignum to C:\Users\farafonoff\AppData\Roaming\npm-cache\registry.npmjs.org\bignum\.cache.json
+86 verbose correctMkdir C:\Users\farafonoff\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+87 silly resolveWithNewModule bignum@0.11.0 checking installable status
+88 silly cache add args [ 'bignum@^0.11.0', null ]
+89 verbose cache add spec bignum@^0.11.0
+90 silly cache add parsed spec Result {
+90 silly cache add   raw: 'bignum@^0.11.0',
+90 silly cache add   scope: null,
+90 silly cache add   escapedName: 'bignum',
+90 silly cache add   name: 'bignum',
+90 silly cache add   rawSpec: '^0.11.0',
+90 silly cache add   spec: '>=0.11.0 <0.12.0',
+90 silly cache add   type: 'range' }
+91 silly addNamed bignum@>=0.11.0 <0.12.0
+92 verbose addNamed ">=0.11.0 <0.12.0" is a valid semver range for bignum
+93 silly addNameRange { name: 'bignum', range: '>=0.11.0 <0.12.0', hasData: false }
+94 silly mapToRegistry name bignum
+95 silly mapToRegistry using default registry
+96 silly mapToRegistry registry https://registry.npmjs.org/
+97 silly mapToRegistry data Result {
+97 silly mapToRegistry   raw: 'bignum',
+97 silly mapToRegistry   scope: null,
+97 silly mapToRegistry   escapedName: 'bignum',
+97 silly mapToRegistry   name: 'bignum',
+97 silly mapToRegistry   rawSpec: '',
+97 silly mapToRegistry   spec: 'latest',
+97 silly mapToRegistry   type: 'tag' }
+98 silly mapToRegistry uri https://registry.npmjs.org/bignum
+99 verbose addNameRange registry:https://registry.npmjs.org/bignum not in flight; fetching
+100 verbose get https://registry.npmjs.org/bignum not expired, no request
+101 silly addNameRange number 2 { name: 'bignum', range: '>=0.11.0 <0.12.0', hasData: true }
+102 silly addNameRange versions [ 'bignum',
+102 silly addNameRange   [ '0.4.0',
+102 silly addNameRange     '0.4.1',
+102 silly addNameRange     '0.5.0',
+102 silly addNameRange     '0.5.1',
+102 silly addNameRange     '0.5.2',
+102 silly addNameRange     '0.5.3',
+102 silly addNameRange     '0.5.4',
+102 silly addNameRange     '0.6.0',
+102 silly addNameRange     '0.6.1',
+102 silly addNameRange     '0.6.2',
+102 silly addNameRange     '0.7.0',
+102 silly addNameRange     '0.8.0',
+102 silly addNameRange     '0.9.0',
+102 silly addNameRange     '0.9.1',
+102 silly addNameRange     '0.9.2',
+102 silly addNameRange     '0.9.3',
+102 silly addNameRange     '0.10.0',
+102 silly addNameRange     '0.10.1',
+102 silly addNameRange     '0.10.2',
+102 silly addNameRange     '0.11.0',
+102 silly addNameRange     '0.12.0',
+102 silly addNameRange     '0.12.1',
+102 silly addNameRange     '0.12.2',
+102 silly addNameRange     '0.12.3',
+102 silly addNameRange     '0.12.4',
+102 silly addNameRange     '0.12.5' ] ]
+103 silly addNamed bignum@0.11.0
+104 verbose addNamed "0.11.0" is a plain semver version for bignum
+105 silly mapToRegistry name bignum
+106 silly mapToRegistry using default registry
+107 silly mapToRegistry registry https://registry.npmjs.org/
+108 silly mapToRegistry data Result {
+108 silly mapToRegistry   raw: 'bignum',
+108 silly mapToRegistry   scope: null,
+108 silly mapToRegistry   escapedName: 'bignum',
+108 silly mapToRegistry   name: 'bignum',
+108 silly mapToRegistry   rawSpec: '',
+108 silly mapToRegistry   spec: 'latest',
+108 silly mapToRegistry   type: 'tag' }
+109 silly mapToRegistry uri https://registry.npmjs.org/bignum
+110 verbose addRemoteTarball https://registry.npmjs.org/bignum/-/bignum-0.11.0.tgz not in flight; adding
+111 verbose addRemoteTarball [ 'https://registry.npmjs.org/bignum/-/bignum-0.11.0.tgz',
+111 verbose addRemoteTarball   '6325f2b6c0e74c9f4c168ec7e25fd3acb8a63484' ]
+112 info retry fetch attempt 1 at 09:57:37
+113 info attempt registry request try #1 at 09:57:37
+114 http fetch GET https://registry.npmjs.org/bignum/-/bignum-0.11.0.tgz
+115 http fetch 200 https://registry.npmjs.org/bignum/-/bignum-0.11.0.tgz
+116 silly fetchAndShaCheck shasum 6325f2b6c0e74c9f4c168ec7e25fd3acb8a63484
+117 verbose addTmpTarball C:\Users\FARAFO~1\AppData\Local\Temp\npm-5164-fa8a0901\registry.npmjs.org\bignum\-\bignum-0.11.0.tgz not in flight; adding
+118 verbose addTmpTarball already have metadata; skipping unpack for bignum@0.11.0
+119 verbose correctMkdir C:\Users\farafonoff\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+120 silly cache afterAdd bignum@0.11.0
+121 verbose afterAdd C:\Users\farafonoff\AppData\Roaming\npm-cache\bignum\0.11.0\package\package.json not in flight; writing
+122 verbose correctMkdir C:\Users\farafonoff\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+123 verbose afterAdd C:\Users\farafonoff\AppData\Roaming\npm-cache\bignum\0.11.0\package\package.json written
+124 silly fetchNamedPackageData nan
+125 silly mapToRegistry name nan
+126 silly mapToRegistry using default registry
+127 silly mapToRegistry registry https://registry.npmjs.org/
+128 silly mapToRegistry data Result {
+128 silly mapToRegistry   raw: 'nan',
+128 silly mapToRegistry   scope: null,
+128 silly mapToRegistry   escapedName: 'nan',
+128 silly mapToRegistry   name: 'nan',
+128 silly mapToRegistry   rawSpec: '',
+128 silly mapToRegistry   spec: 'latest',
+128 silly mapToRegistry   type: 'tag' }
+129 silly mapToRegistry uri https://registry.npmjs.org/nan
+130 verbose request uri https://registry.npmjs.org/nan
+131 verbose request no auth needed
+132 info attempt registry request try #1 at 09:57:38
+133 verbose etag "5a0c2640-20c10"
+134 verbose lastModified Wed, 15 Nov 2017 11:34:24 GMT
+135 http request GET https://registry.npmjs.org/nan
+136 http 200 https://registry.npmjs.org/nan
+137 verbose headers { 'content-type': 'application/json; charset=UTF-8',
+137 verbose headers   server: 'UploadServer',
+137 verbose headers   'cache-control': 'max-age=300',
+137 verbose headers   'last-modified': 'Tue, 12 Dec 2017 11:47:54 GMT',
+137 verbose headers   etag: '"5a2fc1ea-20c1f"',
+137 verbose headers   'content-encoding': 'gzip',
+137 verbose headers   'content-length': '15701',
+137 verbose headers   'accept-ranges': 'bytes',
+137 verbose headers   date: 'Wed, 13 Dec 2017 05:57:37 GMT',
+137 verbose headers   via: '1.1 varnish',
+137 verbose headers   age: '7685',
+137 verbose headers   connection: 'keep-alive',
+137 verbose headers   'x-served-by': 'cache-ams4148-AMS',
+137 verbose headers   'x-cache': 'HIT',
+137 verbose headers   'x-cache-hits': '23',
+137 verbose headers   'x-timer': 'S1513144658.612429,VS0,VE0',
+137 verbose headers   vary: 'Accept-Encoding, Accept' }
+138 silly get cb [ 200,
+138 silly get   { 'content-type': 'application/json; charset=UTF-8',
+138 silly get     server: 'UploadServer',
+138 silly get     'cache-control': 'max-age=300',
+138 silly get     'last-modified': 'Tue, 12 Dec 2017 11:47:54 GMT',
+138 silly get     etag: '"5a2fc1ea-20c1f"',
+138 silly get     'content-encoding': 'gzip',
+138 silly get     'content-length': '15701',
+138 silly get     'accept-ranges': 'bytes',
+138 silly get     date: 'Wed, 13 Dec 2017 05:57:37 GMT',
+138 silly get     via: '1.1 varnish',
+138 silly get     age: '7685',
+138 silly get     connection: 'keep-alive',
+138 silly get     'x-served-by': 'cache-ams4148-AMS',
+138 silly get     'x-cache': 'HIT',
+138 silly get     'x-cache-hits': '23',
+138 silly get     'x-timer': 'S1513144658.612429,VS0,VE0',
+138 silly get     vary: 'Accept-Encoding, Accept' } ]
+139 verbose get saving nan to C:\Users\farafonoff\AppData\Roaming\npm-cache\registry.npmjs.org\nan\.cache.json
+140 verbose correctMkdir C:\Users\farafonoff\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+141 silly resolveWithNewModule nan@2.8.0 checking installable status
+142 silly cache add args [ 'nan@^2.0.0', null ]
+143 verbose cache add spec nan@^2.0.0
+144 silly cache add parsed spec Result {
+144 silly cache add   raw: 'nan@^2.0.0',
+144 silly cache add   scope: null,
+144 silly cache add   escapedName: 'nan',
+144 silly cache add   name: 'nan',
+144 silly cache add   rawSpec: '^2.0.0',
+144 silly cache add   spec: '>=2.0.0 <3.0.0',
+144 silly cache add   type: 'range' }
+145 silly addNamed nan@>=2.0.0 <3.0.0
+146 verbose addNamed ">=2.0.0 <3.0.0" is a valid semver range for nan
+147 silly addNameRange { name: 'nan', range: '>=2.0.0 <3.0.0', hasData: false }
+148 silly mapToRegistry name nan
+149 silly mapToRegistry using default registry
+150 silly mapToRegistry registry https://registry.npmjs.org/
+151 silly mapToRegistry data Result {
+151 silly mapToRegistry   raw: 'nan',
+151 silly mapToRegistry   scope: null,
+151 silly mapToRegistry   escapedName: 'nan',
+151 silly mapToRegistry   name: 'nan',
+151 silly mapToRegistry   rawSpec: '',
+151 silly mapToRegistry   spec: 'latest',
+151 silly mapToRegistry   type: 'tag' }
+152 silly mapToRegistry uri https://registry.npmjs.org/nan
+153 verbose addNameRange registry:https://registry.npmjs.org/nan not in flight; fetching
+154 verbose get https://registry.npmjs.org/nan not expired, no request
+155 silly addNameRange number 2 { name: 'nan', range: '>=2.0.0 <3.0.0', hasData: true }
+156 silly addNameRange versions [ 'nan',
+156 silly addNameRange   [ '0.3.0-wip',
+156 silly addNameRange     '0.3.0-wip2',
+156 silly addNameRange     '0.3.0',
+156 silly addNameRange     '0.3.1',
+156 silly addNameRange     '0.3.2',
+156 silly addNameRange     '0.4.0',
+156 silly addNameRange     '0.4.1',
+156 silly addNameRange     '0.4.2',
+156 silly addNameRange     '0.4.3',
+156 silly addNameRange     '0.4.4',
+156 silly addNameRange     '0.5.0',
+156 silly addNameRange     '0.5.1',
+156 silly addNameRange     '0.5.2',
+156 silly addNameRange     '0.6.0',
+156 silly addNameRange     '0.7.0',
+156 silly addNameRange     '0.7.1',
+156 silly addNameRange     '0.8.0',
+156 silly addNameRange     '1.0.0',
+156 silly addNameRange     '1.1.0',
+156 silly addNameRange     '1.1.1',
+156 silly addNameRange     '1.1.2',
+156 silly addNameRange     '1.2.0',
+156 silly addNameRange     '1.3.0',
+156 silly addNameRange     '1.4.0',
+156 silly addNameRange     '1.4.1',
+156 silly addNameRange     '1.5.0',
+156 silly addNameRange     '1.4.2',
+156 silly addNameRange     '1.4.3',
+156 silly addNameRange     '1.5.1',
+156 silly addNameRange     '1.5.2',
+156 silly addNameRange     '1.6.0',
+156 silly addNameRange     '1.5.3',
+156 silly addNameRange     '1.6.1',
+156 silly addNameRange     '1.6.2',
+156 silly addNameRange     '1.7.0',
+156 silly addNameRange     '1.8.0',
+156 silly addNameRange     '1.8.1',
+156 silly addNameRange     '1.8.2',
+156 silly addNameRange     '1.8.3',
+156 silly addNameRange     '1.8.4',
+156 silly addNameRange     '1.9.0',
+156 silly addNameRange     '2.0.0',
+156 silly addNameRange     '2.0.1',
+156 silly addNameRange     '2.0.2',
+156 silly addNameRange     '2.0.3',
+156 silly addNameRange     '2.0.4',
+156 silly addNameRange     '2.0.5',
+156 silly addNameRange     '2.0.6',
+156 silly addNameRange     '2.0.7',
+156 silly addNameRange     '2.0.8',
+156 silly addNameRange     '2.0.9',
+156 silly addNameRange     '2.1.0',
+156 silly addNameRange     '2.2.0',
+156 silly addNameRange     '2.2.1',
+156 silly addNameRange     '2.3.0',
+156 silly addNameRange     '2.3.1',
+156 silly addNameRange     '2.3.2',
+156 silly addNameRange     '2.3.3',
+156 silly addNameRange     '2.3.4',
+156 silly addNameRange     '2.3.5',
+156 silly addNameRange     '2.4.0',
+156 silly addNameRange     '2.5.0',
+156 silly addNameRange     '2.5.1',
+156 silly addNameRange     '2.6.0',
+156 silly addNameRange     '2.6.1',
+156 silly addNameRange     '2.6.2',
+156 silly addNameRange     '2.7.0',
+156 silly addNameRange     '2.8.0' ] ]
+157 silly addNamed nan@2.8.0
+158 verbose addNamed "2.8.0" is a plain semver version for nan
+159 silly cache afterAdd nan@2.8.0
+160 verbose afterAdd C:\Users\farafonoff\AppData\Roaming\npm-cache\nan\2.8.0\package\package.json not in flight; writing
+161 verbose correctMkdir C:\Users\farafonoff\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+162 verbose afterAdd C:\Users\farafonoff\AppData\Roaming\npm-cache\nan\2.8.0\package\package.json written
+163 silly loadAllDepsIntoIdealTree Finishing
+164 silly loadIdealTree Finishing
+165 silly currentTree andvent-of-code@2017.0.1
+165 silly currentTree +-- hashmap@2.3.0
+165 silly currentTree +-- js-md5@0.4.2
+165 silly currentTree +-- js-priority-queue@0.1.5
+165 silly currentTree `-- lodash@4.17.4
+166 silly idealTree andvent-of-code@2017.0.1
+166 silly idealTree +-- bignum@0.11.0
+166 silly idealTree +-- hashmap@2.3.0
+166 silly idealTree +-- js-md5@0.4.2
+166 silly idealTree +-- js-priority-queue@0.1.5
+166 silly idealTree +-- lodash@4.17.4
+166 silly idealTree +-- nan@2.8.0
+166 silly idealTree `-- nodejs-chinese-remainder@0.0.4
+167 silly generateActionsToTake Starting
+168 silly install generateActionsToTake
+169 silly generateActionsToTake Finishing
+170 silly diffTrees action count 3
+171 silly diffTrees add nan@2.8.0
+172 silly diffTrees add bignum@0.11.0
+173 silly diffTrees add nodejs-chinese-remainder@0.0.4
+174 silly decomposeActions action count 24
+175 silly decomposeActions fetch nan@2.8.0
+176 silly decomposeActions extract nan@2.8.0
+177 silly decomposeActions test nan@2.8.0
+178 silly decomposeActions preinstall nan@2.8.0
+179 silly decomposeActions build nan@2.8.0
+180 silly decomposeActions install nan@2.8.0
+181 silly decomposeActions postinstall nan@2.8.0
+182 silly decomposeActions finalize nan@2.8.0
+183 silly decomposeActions fetch bignum@0.11.0
+184 silly decomposeActions extract bignum@0.11.0
+185 silly decomposeActions test bignum@0.11.0
+186 silly decomposeActions preinstall bignum@0.11.0
+187 silly decomposeActions build bignum@0.11.0
+188 silly decomposeActions install bignum@0.11.0
+189 silly decomposeActions postinstall bignum@0.11.0
+190 silly decomposeActions finalize bignum@0.11.0
+191 silly decomposeActions fetch nodejs-chinese-remainder@0.0.4
+192 silly decomposeActions extract nodejs-chinese-remainder@0.0.4
+193 silly decomposeActions test nodejs-chinese-remainder@0.0.4
+194 silly decomposeActions preinstall nodejs-chinese-remainder@0.0.4
+195 silly decomposeActions build nodejs-chinese-remainder@0.0.4
+196 silly decomposeActions install nodejs-chinese-remainder@0.0.4
+197 silly decomposeActions postinstall nodejs-chinese-remainder@0.0.4
+198 silly decomposeActions finalize nodejs-chinese-remainder@0.0.4
+199 silly runTopLevelLifecycles Starting
+200 silly executeActions Starting
+201 silly install executeActions
+202 silly doSerial global-install 0
+203 silly doParallel fetch 3
+204 verbose correctMkdir C:\Users\farafonoff\AppData\Roaming\npm-cache\_locks correctMkdir not in flight; initializing
+205 verbose lock using C:\Users\farafonoff\AppData\Roaming\npm-cache\_locks\staging-dc8dbdf205451741.lock for C:\Projects\AdventOfCode\2017\node_modules\.staging
+206 silly doParallel extract 3
+207 silly extract nan@2.8.0
+208 silly extract bignum@0.11.0
+209 silly extract nodejs-chinese-remainder@0.0.4
+210 verbose unbuild node_modules\.staging\nan-eec7e06a
+211 verbose unbuild node_modules\.staging\bignum-67084451
+212 verbose unbuild node_modules\.staging\nodejs-chinese-remainder-bb54e329
+213 silly gentlyRm C:\Projects\AdventOfCode\2017\node_modules\.staging\nan-eec7e06a is being purged from base C:\Projects\AdventOfCode\2017
+214 verbose gentlyRm don't care about contents; nuking C:\Projects\AdventOfCode\2017\node_modules\.staging\nan-eec7e06a
+215 silly gentlyRm C:\Projects\AdventOfCode\2017\node_modules\.staging\bignum-67084451 is being purged from base C:\Projects\AdventOfCode\2017
+216 verbose gentlyRm don't care about contents; nuking C:\Projects\AdventOfCode\2017\node_modules\.staging\bignum-67084451
+217 verbose tar unpack C:\Users\farafonoff\AppData\Roaming\npm-cache\nan\2.8.0\package.tgz
+218 verbose tar unpacking to C:\Projects\AdventOfCode\2017\node_modules\.staging\nan-eec7e06a
+219 silly gentlyRm C:\Projects\AdventOfCode\2017\node_modules\.staging\nan-eec7e06a is being purged
+220 verbose gentlyRm don't care about contents; nuking C:\Projects\AdventOfCode\2017\node_modules\.staging\nan-eec7e06a
+221 verbose tar unpack C:\Users\farafonoff\AppData\Roaming\npm-cache\bignum\0.11.0\package.tgz
+222 verbose tar unpacking to C:\Projects\AdventOfCode\2017\node_modules\.staging\bignum-67084451
+223 silly gentlyRm C:\Projects\AdventOfCode\2017\node_modules\.staging\bignum-67084451 is being purged
+224 verbose gentlyRm don't care about contents; nuking C:\Projects\AdventOfCode\2017\node_modules\.staging\bignum-67084451
+225 silly gunzTarPerm modes [ '777', '666' ]
+226 silly gentlyRm C:\Projects\AdventOfCode\2017\node_modules\.staging\nodejs-chinese-remainder-bb54e329 is being purged from base C:\Projects\AdventOfCode\2017
+227 verbose gentlyRm don't care about contents; nuking C:\Projects\AdventOfCode\2017\node_modules\.staging\nodejs-chinese-remainder-bb54e329
+228 silly gunzTarPerm modes [ '777', '666' ]
+229 verbose tar unpack C:\Users\farafonoff\AppData\Roaming\npm-cache\nodejs-chinese-remainder\0.0.4\package.tgz
+230 verbose tar unpacking to C:\Projects\AdventOfCode\2017\node_modules\.staging\nodejs-chinese-remainder-bb54e329
+231 silly gentlyRm C:\Projects\AdventOfCode\2017\node_modules\.staging\nodejs-chinese-remainder-bb54e329 is being purged
+232 verbose gentlyRm don't care about contents; nuking C:\Projects\AdventOfCode\2017\node_modules\.staging\nodejs-chinese-remainder-bb54e329
+233 silly gunzTarPerm modes [ '777', '666' ]
+234 silly gunzTarPerm extractEntry package.json
+235 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+236 silly gunzTarPerm extractEntry package.json
+237 silly gunzTarPerm modified mode [ 'package.json', 436, 438 ]
+238 silly gunzTarPerm extractEntry package.json
+239 silly gunzTarPerm modified mode [ 'package.json', 436, 438 ]
+240 silly gunzTarPerm extractEntry .npmignore
+241 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+242 silly gunzTarPerm extractEntry index.js
+243 silly gunzTarPerm modified mode [ 'index.js', 420, 438 ]
+244 silly gunzTarPerm extractEntry README.md
+245 silly gunzTarPerm modified mode [ 'README.md', 436, 438 ]
+246 silly gunzTarPerm extractEntry include_dirs.js
+247 silly gunzTarPerm modified mode [ 'include_dirs.js', 436, 438 ]
+248 silly gunzTarPerm extractEntry .npmignore
+249 silly gunzTarPerm modified mode [ '.npmignore', 436, 438 ]
+250 silly gunzTarPerm extractEntry README.md
+251 silly gunzTarPerm modified mode [ 'README.md', 436, 438 ]
+252 silly gunzTarPerm extractEntry binding.gyp
+253 silly gunzTarPerm modified mode [ 'binding.gyp', 420, 438 ]
+254 silly gunzTarPerm extractEntry .travis.yml
+255 silly gunzTarPerm modified mode [ '.travis.yml', 420, 438 ]
+256 silly gunzTarPerm extractEntry README.markdown
+257 silly gunzTarPerm modified mode [ 'README.markdown', 420, 438 ]
+258 silly gunzTarPerm extractEntry bignum.cc
+259 silly gunzTarPerm modified mode [ 'bignum.cc', 420, 438 ]
+260 silly gunzTarPerm extractEntry .dntrc
+261 silly gunzTarPerm modified mode [ '.dntrc', 420, 438 ]
+262 silly gunzTarPerm extractEntry examples/gen.js
+263 silly gunzTarPerm modified mode [ 'examples/gen.js', 420, 438 ]
+264 silly gunzTarPerm extractEntry examples/perfect.js
+265 silly gunzTarPerm modified mode [ 'examples/perfect.js', 420, 438 ]
+266 silly gunzTarPerm extractEntry examples/simple.js
+267 silly gunzTarPerm modified mode [ 'examples/simple.js', 420, 438 ]
+268 silly gunzTarPerm extractEntry test/big.js
+269 silly gunzTarPerm modified mode [ 'test/big.js', 420, 438 ]
+270 silly gunzTarPerm extractEntry test/buf.js
+271 silly gunzTarPerm modified mode [ 'test/buf.js', 420, 438 ]
+272 silly gunzTarPerm extractEntry test/gh52.js
+273 silly gunzTarPerm modified mode [ 'test/gh52.js', 420, 438 ]
+274 silly gunzTarPerm extractEntry test/isbignum.js
+275 silly gunzTarPerm modified mode [ 'test/isbignum.js', 420, 438 ]
+276 silly gunzTarPerm extractEntry test/seed.js
+277 silly gunzTarPerm modified mode [ 'test/seed.js', 420, 438 ]
+278 silly gunzTarPerm extractEntry test/wincrash.js
+279 silly gunzTarPerm modified mode [ 'test/wincrash.js', 420, 438 ]
+280 silly gunzTarPerm extractEntry nan_converters_43_inl.h
+281 silly gunzTarPerm modified mode [ 'nan_converters_43_inl.h', 436, 438 ]
+282 silly gunzTarPerm extractEntry LICENSE.md
+283 silly gunzTarPerm modified mode [ 'LICENSE.md', 436, 438 ]
+284 silly gunzTarPerm extractEntry doc/new.md
+285 silly gunzTarPerm modified mode [ 'doc/new.md', 436, 438 ]
+286 silly gunzTarPerm extractEntry LICENSE
+287 silly gunzTarPerm modified mode [ 'LICENSE', 436, 438 ]
+288 silly gunzTarPerm extractEntry chinese_remainder.js
+289 silly gunzTarPerm modified mode [ 'chinese_remainder.js', 436, 438 ]
+290 silly gunzTarPerm extractEntry example.js
+291 silly gunzTarPerm modified mode [ 'example.js', 436, 438 ]
+292 silly gunzTarPerm extractEntry index.js
+293 silly gunzTarPerm modified mode [ 'index.js', 436, 438 ]
+294 silly gunzTarPerm extractEntry chinese_remainder_bignum.js
+295 silly gunzTarPerm modified mode [ 'chinese_remainder_bignum.js', 436, 438 ]
+296 silly gunzTarPerm extractEntry .travis.yml
+297 silly gunzTarPerm modified mode [ '.travis.yml', 436, 438 ]
+298 silly gunzTarPerm extractEntry test/test.js
+299 silly gunzTarPerm modified mode [ 'test/test.js', 436, 438 ]
+300 silly gunzTarPerm extractEntry test/test_bigint.js
+301 silly gunzTarPerm modified mode [ 'test/test_bigint.js', 436, 438 ]
+302 silly gunzTarPerm extractEntry doc/asyncworker.md
+303 silly gunzTarPerm modified mode [ 'doc/asyncworker.md', 436, 438 ]
+304 silly gunzTarPerm extractEntry doc/callback.md
+305 silly gunzTarPerm modified mode [ 'doc/callback.md', 436, 438 ]
+306 silly gunzTarPerm extractEntry doc/converters.md
+307 silly gunzTarPerm modified mode [ 'doc/converters.md', 436, 438 ]
+308 silly gunzTarPerm extractEntry doc/errors.md
+309 silly gunzTarPerm modified mode [ 'doc/errors.md', 436, 438 ]
+310 silly gunzTarPerm extractEntry doc/json.md
+311 silly gunzTarPerm modified mode [ 'doc/json.md', 436, 438 ]
+312 silly gunzTarPerm extractEntry doc/maybe_types.md
+313 silly gunzTarPerm modified mode [ 'doc/maybe_types.md', 436, 438 ]
+314 silly gunzTarPerm extractEntry doc/methods.md
+315 silly gunzTarPerm modified mode [ 'doc/methods.md', 436, 438 ]
+316 silly gunzTarPerm extractEntry doc/buffers.md
+317 silly gunzTarPerm modified mode [ 'doc/buffers.md', 436, 438 ]
+318 silly gunzTarPerm extractEntry doc/node_misc.md
+319 silly gunzTarPerm modified mode [ 'doc/node_misc.md', 436, 438 ]
+320 silly gunzTarPerm extractEntry doc/object_wrappers.md
+321 silly gunzTarPerm modified mode [ 'doc/object_wrappers.md', 436, 438 ]
+322 silly gunzTarPerm extractEntry doc/persistent.md
+323 silly gunzTarPerm modified mode [ 'doc/persistent.md', 436, 438 ]
+324 silly gunzTarPerm extractEntry doc/scopes.md
+325 silly gunzTarPerm modified mode [ 'doc/scopes.md', 436, 438 ]
+326 silly gunzTarPerm extractEntry doc/script.md
+327 silly gunzTarPerm modified mode [ 'doc/script.md', 436, 438 ]
+328 silly gunzTarPerm extractEntry doc/string_bytes.md
+329 silly gunzTarPerm modified mode [ 'doc/string_bytes.md', 436, 438 ]
+330 silly gunzTarPerm extractEntry doc/v8_internals.md
+331 silly gunzTarPerm modified mode [ 'doc/v8_internals.md', 436, 438 ]
+332 silly gunzTarPerm extractEntry doc/v8_misc.md
+333 silly gunzTarPerm modified mode [ 'doc/v8_misc.md', 436, 438 ]
+334 silly gunzTarPerm extractEntry nan.h
+335 silly gunzTarPerm modified mode [ 'nan.h', 436, 438 ]
+336 silly gunzTarPerm extractEntry nan_callbacks.h
+337 silly gunzTarPerm modified mode [ 'nan_callbacks.h', 436, 438 ]
+338 silly gunzTarPerm extractEntry nan_callbacks_12_inl.h
+339 silly gunzTarPerm modified mode [ 'nan_callbacks_12_inl.h', 436, 438 ]
+340 silly gunzTarPerm extractEntry nan_callbacks_pre_12_inl.h
+341 silly gunzTarPerm modified mode [ 'nan_callbacks_pre_12_inl.h', 436, 438 ]
+342 silly gunzTarPerm extractEntry nan_converters.h
+343 silly gunzTarPerm modified mode [ 'nan_converters.h', 436, 438 ]
+344 silly gunzTarPerm extractEntry nan_converters_pre_43_inl.h
+345 silly gunzTarPerm modified mode [ 'nan_converters_pre_43_inl.h', 436, 438 ]
+346 silly gunzTarPerm extractEntry nan_implementation_12_inl.h
+347 silly gunzTarPerm modified mode [ 'nan_implementation_12_inl.h', 436, 438 ]
+348 silly gunzTarPerm extractEntry nan_implementation_pre_12_inl.h
+349 silly gunzTarPerm modified mode [ 'nan_implementation_pre_12_inl.h', 436, 438 ]
+350 silly gunzTarPerm extractEntry nan_json.h
+351 silly gunzTarPerm modified mode [ 'nan_json.h', 436, 438 ]
+352 silly gunzTarPerm extractEntry nan_maybe_43_inl.h
+353 silly gunzTarPerm modified mode [ 'nan_maybe_43_inl.h', 436, 438 ]
+354 silly gentlyRm C:\Projects\AdventOfCode\2017\node_modules\.staging\nodejs-chinese-remainder-bb54e329\node_modules is being purged
+355 verbose gentlyRm don't care about contents; nuking C:\Projects\AdventOfCode\2017\node_modules\.staging\nodejs-chinese-remainder-bb54e329\node_modules
+356 silly gunzTarPerm extractEntry nan_maybe_pre_43_inl.h
+357 silly gunzTarPerm modified mode [ 'nan_maybe_pre_43_inl.h', 436, 438 ]
+358 silly gunzTarPerm extractEntry nan_new.h
+359 silly gunzTarPerm modified mode [ 'nan_new.h', 436, 438 ]
+360 silly gunzTarPerm extractEntry nan_object_wrap.h
+361 silly gunzTarPerm modified mode [ 'nan_object_wrap.h', 436, 438 ]
+362 silly gunzTarPerm extractEntry nan_persistent_12_inl.h
+363 silly gunzTarPerm modified mode [ 'nan_persistent_12_inl.h', 436, 438 ]
+364 silly gunzTarPerm extractEntry nan_persistent_pre_12_inl.h
+365 silly gunzTarPerm modified mode [ 'nan_persistent_pre_12_inl.h', 436, 438 ]
+366 silly gunzTarPerm extractEntry nan_private.h
+367 silly gunzTarPerm modified mode [ 'nan_private.h', 436, 438 ]
+368 silly gentlyRm C:\Projects\AdventOfCode\2017\node_modules\.staging\bignum-67084451\node_modules is being purged
+369 verbose gentlyRm don't care about contents; nuking C:\Projects\AdventOfCode\2017\node_modules\.staging\bignum-67084451\node_modules
+370 silly gunzTarPerm extractEntry nan_string_bytes.h
+371 silly gunzTarPerm modified mode [ 'nan_string_bytes.h', 436, 438 ]
+372 silly gunzTarPerm extractEntry nan_typedarray_contents.h
+373 silly gunzTarPerm modified mode [ 'nan_typedarray_contents.h', 436, 438 ]
+374 silly gunzTarPerm extractEntry nan_weak.h
+375 silly gunzTarPerm modified mode [ 'nan_weak.h', 436, 438 ]
+376 silly gunzTarPerm extractEntry CHANGELOG.md
+377 silly gunzTarPerm modified mode [ 'CHANGELOG.md', 436, 438 ]
+378 silly gunzTarPerm extractEntry tools/package.json
+379 silly gunzTarPerm modified mode [ 'tools/package.json', 436, 438 ]
+380 silly gunzTarPerm extractEntry tools/README.md
+381 silly gunzTarPerm modified mode [ 'tools/README.md', 436, 438 ]
+382 silly gunzTarPerm extractEntry tools/1to2.js
+383 silly gunzTarPerm modified mode [ 'tools/1to2.js', 509, 511 ]
+384 silly gentlyRm C:\Projects\AdventOfCode\2017\node_modules\.staging\nan-eec7e06a\node_modules is being purged
+385 verbose gentlyRm don't care about contents; nuking C:\Projects\AdventOfCode\2017\node_modules\.staging\nan-eec7e06a\node_modules
+386 silly doParallel preinstall 3
+387 silly preinstall nan@2.8.0 C:\Projects\AdventOfCode\2017\node_modules\.staging\nan-eec7e06a
+388 info lifecycle nan@2.8.0~preinstall: nan@2.8.0
+389 silly preinstall bignum@0.11.0 C:\Projects\AdventOfCode\2017\node_modules\.staging\bignum-67084451
+390 info lifecycle bignum@0.11.0~preinstall: bignum@0.11.0
+391 silly preinstall nodejs-chinese-remainder@0.0.4 C:\Projects\AdventOfCode\2017\node_modules\.staging\nodejs-chinese-remainder-bb54e329
+392 info lifecycle nodejs-chinese-remainder@0.0.4~preinstall: nodejs-chinese-remainder@0.0.4
+393 silly lifecycle nan@2.8.0~preinstall: no script for preinstall, continuing
+394 silly lifecycle bignum@0.11.0~preinstall: no script for preinstall, continuing
+395 silly lifecycle nodejs-chinese-remainder@0.0.4~preinstall: no script for preinstall, continuing
+396 silly doReverseSerial remove 0
+397 silly doSerial move 0
+398 silly doSerial finalize 3
+399 silly finalize C:\Projects\AdventOfCode\2017\node_modules\nan
+400 silly finalize C:\Projects\AdventOfCode\2017\node_modules\bignum
+401 silly finalize C:\Projects\AdventOfCode\2017\node_modules\nodejs-chinese-remainder
+402 silly doSerial build 3
+403 silly build nan@2.8.0
+404 info linkStuff nan@2.8.0
+405 silly linkStuff nan@2.8.0 has C:\Projects\AdventOfCode\2017\node_modules as its parent node_modules
+406 verbose linkBins nan@2.8.0
+407 verbose linkMans nan@2.8.0
+408 silly build bignum@0.11.0
+409 info linkStuff bignum@0.11.0
+410 silly linkStuff bignum@0.11.0 has C:\Projects\AdventOfCode\2017\node_modules as its parent node_modules
+411 verbose linkBins bignum@0.11.0
+412 verbose linkMans bignum@0.11.0
+413 silly build nodejs-chinese-remainder@0.0.4
+414 info linkStuff nodejs-chinese-remainder@0.0.4
+415 silly linkStuff nodejs-chinese-remainder@0.0.4 has C:\Projects\AdventOfCode\2017\node_modules as its parent node_modules
+416 verbose linkBins nodejs-chinese-remainder@0.0.4
+417 verbose linkMans nodejs-chinese-remainder@0.0.4
+418 silly doSerial global-link 0
+419 silly doParallel update-linked 0
+420 silly doSerial install 3
+421 silly install nan@2.8.0 C:\Projects\AdventOfCode\2017\node_modules\.staging\nan-eec7e06a
+422 info lifecycle nan@2.8.0~install: nan@2.8.0
+423 silly lifecycle nan@2.8.0~install: no script for install, continuing
+424 silly install bignum@0.11.0 C:\Projects\AdventOfCode\2017\node_modules\.staging\bignum-67084451
+425 info lifecycle bignum@0.11.0~install: bignum@0.11.0
+426 verbose lifecycle bignum@0.11.0~install: unsafe-perm in lifecycle true
+427 verbose lifecycle bignum@0.11.0~install: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Projects\AdventOfCode\2017\node_modules\bignum\node_modules\.bin;C:\Projects\AdventOfCode\2017\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\nodejs\;C:\Program Files\PuTTY\;C:\Program Files\TortoiseGit\bin;C:\Users\farafonoff\AppData\Local\Microsoft\WindowsApps;;C:\Program Files\Microsoft VS Code\bin;C:\Users\farafonoff\AppData\Roaming\npm;C:\Users\farafonoff\AppData\Local\Programs\Fiddler;C:\Program Files\Docker Toolbox
+428 verbose lifecycle bignum@0.11.0~install: CWD: C:\Projects\AdventOfCode\2017\node_modules\bignum
+429 silly lifecycle bignum@0.11.0~install: Args: [ '/d /s /c', 'node-gyp configure build' ]
+430 silly lifecycle bignum@0.11.0~install: Returned: code: 1  signal: null
+431 info lifecycle bignum@0.11.0~install: Failed to exec install script
+432 verbose unlock done using C:\Users\farafonoff\AppData\Roaming\npm-cache\_locks\staging-dc8dbdf205451741.lock for C:\Projects\AdventOfCode\2017\node_modules\.staging
+433 silly rollbackFailedOptional Starting
+434 silly rollbackFailedOptional Finishing
+435 silly runTopLevelLifecycles Finishing
+436 silly install printInstalled
+437 verbose stack Error: bignum@0.11.0 install: `node-gyp configure build`
+437 verbose stack Exit status 1
+437 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
+437 verbose stack     at emitTwo (events.js:106:13)
+437 verbose stack     at EventEmitter.emit (events.js:191:7)
+437 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
+437 verbose stack     at emitTwo (events.js:106:13)
+437 verbose stack     at ChildProcess.emit (events.js:191:7)
+437 verbose stack     at maybeClose (internal/child_process.js:920:16)
+437 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:230:5)
+438 verbose pkgid bignum@0.11.0
+439 verbose cwd C:\Projects\AdventOfCode\2017
+440 error Windows_NT 10.0.14393
+441 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "--save" "nodejs-chinese-remainder"
+442 error node v6.11.5
+443 error npm  v3.10.10
+444 error code ELIFECYCLE
+445 error bignum@0.11.0 install: `node-gyp configure build`
+445 error Exit status 1
+446 error Failed at the bignum@0.11.0 install script 'node-gyp configure build'.
+446 error Make sure you have the latest version of node.js and npm installed.
+446 error If you do, this is most likely a problem with the bignum package,
+446 error not with npm itself.
+446 error Tell the author that this fails on your system:
+446 error     node-gyp configure build
+446 error You can get information on how to open an issue for this project with:
+446 error     npm bugs bignum
+446 error Or if that isn't available, you can get their info via:
+446 error     npm owner ls bignum
+446 error There is likely additional logging output above.
+447 verbose exit [ 1, true ]
