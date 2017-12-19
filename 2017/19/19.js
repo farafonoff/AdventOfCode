@@ -99,5 +99,4 @@ function follow(data, pos) {
 }
 
 let pos = [contents[0].indexOf('|'),0]
-console.log(pos);
 console.log(follow(contents, pos));
