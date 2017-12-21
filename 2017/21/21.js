@@ -30,7 +30,7 @@ function r(arr, flip) {
     }
     return narr;
 }
-
+var cache = new HM();
 function apply(arr, patterns, len) {
     let result = [];
     for(let i=0;i<arr.length;i+=len) {
@@ -43,21 +43,27 @@ function apply(arr, patterns, len) {
                     tarr[x][y] = arr[i+x][j+y];
                 }
             }
-            for(let i=0;i<4;++i) {
-                options[i] = tarr.map(r=>r.join('')).join('/');
-                tarr = r(tarr,false);
+            let src = tarr.map(r=>r.join('')).join('/');
+            let targetPattern;
+            if (!cache.has(src)) {
+                for(let i=0;i<4;++i) {
+                    options[i] = tarr.map(r=>r.join('')).join('/');
+                    tarr = r(tarr,false);
+                }
+                tarr = r(tarr, true);
+                for(let i=4;i<8;++i) {
+                    tarr = r(tarr,false);
+                    options[i] = tarr.map(r=>r.join('')).join('/');
+                }
+                let found = patterns.filter(pattern => options.indexOf(pattern[0])!=-1)[0];
+                if (!found) return arr;
+                options.forEach(opt => {
+                    cache.set(opt, found[1]);
+                })    
+                targetPattern = found[1];
             }
-            tarr = r(tarr, true);
-            for(let i=4;i<8;++i) {
-                tarr = r(tarr,false);
-                options[i] = tarr.map(r=>r.join('')).join('/');
-            }
-            //console.log(options);
-            let found = patterns.filter(pattern => options.indexOf(pattern[0])!=-1)[0];
-            //console.log(patterns.filter(pattern => options.indexOf(pattern[0])!=-1).length);
-            if (!found) return arr;
-            //console.log(found);
-            let rarr = found[1].split('/').map(r => r.split(''));
+            targetPattern = cache.get(src);
+            let rarr = targetPattern.split('/').map(r => r.split(''));
             let sx = (i/len)*(len+1);
             let sy = (j/len)*(len+1);
             for(let x=0;x<len+1;++x) {
@@ -86,9 +92,18 @@ for(let iter=0;iter<18;++iter) {
         len = 3;
     }
     let patterns = contents.filter(c=>c[0].length == len*len+len-1);
-    console.log(current);
+    //console.log(current);
     //console.log(patterns);
     current = apply(current, patterns, len);
+    if (iter==4) {
+        let a1 = 0;
+        for(let i=0;i<current.length;++i) {
+            for(j=0;j<current.length;++j) {
+                if (current[i][j]==='#') ++a1;
+            }
+        }
+        console.log('Part 1', a1);
+    }
 }
 let a1 = 0;
 for(let i=0;i<current.length;++i) {
@@ -96,4 +111,4 @@ for(let i=0;i<current.length;++i) {
         if (current[i][j]==='#') ++a1;
     }
 }
-console.log(a1);
+console.log('Part 2', a1);
