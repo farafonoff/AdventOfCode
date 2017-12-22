@@ -40,13 +40,27 @@ let dir = [-1, 0];
 function walk(pos, dir, steps) {
     let inf = 0;
     for(let step=0;step<steps;++step) {
-        if (map[pos[0]][pos[1]]=='#') {
-            dir = [dir[1], -dir[0]];
-            map[pos[0]][pos[1]] = '.';
-        } else {
-            dir = [-dir[1], dir[0]];
-            map[pos[0]][pos[1]] = '#';
-            ++inf;
+        switch(map[pos[0]][pos[1]]) {
+            case '.': {
+                dir = [-dir[1], dir[0]];
+                map[pos[0]][pos[1]] = 'W';
+                break;
+            }
+            case 'W': {
+                map[pos[0]][pos[1]] = '#';
+                ++inf;
+                break;
+            }
+            case '#': {
+                dir = [dir[1], -dir[0]];
+                map[pos[0]][pos[1]] = 'F';
+                break;
+            }
+            case 'F': {
+                dir = [-dir[0], -dir[1]];
+                map[pos[0]][pos[1]] = '.';
+                break;
+            }            
         }
         pos = [pos[0]+dir[0], pos[1]+dir[1]];
         //console.log(map);
@@ -54,4 +68,4 @@ function walk(pos, dir, steps) {
     return inf;
 }
 
-console.log(walk(cpos, dir, 10000));
+console.log(walk(cpos, dir, 10000000));
