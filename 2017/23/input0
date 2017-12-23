@@ -21,7 +21,7 @@ sub g b
 sub d -1
 set g d
 sub g b
-* jnza g 11
+jnza g 11
 jnz f 2
 sub h -1
 set g b
