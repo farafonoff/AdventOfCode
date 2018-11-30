@@ -1,0 +1,25 @@
+{
+  "name": "andvent-of-code",
+  "version": "1.0.0",
+  "description": "Don't look until solved it youself",
+  "main": "puzzle01.js",
+  "dependencies": {
+    "hashmap": "^2.0.6",
+    "js-md5": "^0.4.1",
+    "js-priority-queue": "^0.1.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farafonoff/Advent2016.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/farafonoff/Advent2016/issues"
+  },
+  "homepage": "https://github.com/farafonoff/Advent2016#readme"
+}

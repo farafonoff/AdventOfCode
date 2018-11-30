@@ -1,0 +1,114 @@
+<script>
+var isize = 6;
+var steps = 5;
+var iext = isize+2;
+function puz2_corners_on(arr) {
+	arr[1][1] = 1;
+	arr[1][isize] = 1;
+	arr[isize][1] = 1;
+	arr[isize][isize] = 1;
+	return arr;
+}
+
+function createArray(length) {
+    var a = new Array(Number(length) || 0).fill(0);
+
+    if (arguments.length > 1) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        for (var i = 0; i < length; i++) {
+            a[i] = createArray.apply(this, args);
+        }
+    }
+
+    return a;
+}
+
+function neigh(arr,i,j) {
+			var neighs = 0;
+			for(var k=i-1;k<=i+1;++k) {
+				for(var l=j-1;l<=j+1;++l) {
+					neighs+=arr[k][l];
+				}
+			}
+			neighs-=arr[i][j];
+			return neighs;
+}
+
+function next(arr) {
+	var res = createArray(iext,iext);
+	for(var i=1;i<iext-1;++i) {
+		for(var j=1;j<iext-1;++j) {
+			var neighs = neigh(arr,i,j);
+			if (arr[i][j]==0) {
+				if (neighs==3) {
+					res[i][j] = 1;
+				} else {
+					res[i][j] = arr[i][j];
+				}
+			}
+			if (arr[i][j]==1) {
+				if (neighs<2||neighs>3) {
+					res[i][j] = 0;
+				} else {
+					res[i][j] = arr[i][j];
+				}
+			}
+		}
+	}
+	return puz2_corners_on(res);
+}
+function parse() {
+	var lines = document.getElementById('field').innerHTML.split('\n');
+	var arr = createArray(1,iext)
+	.concat(
+		lines.map(line=>
+			[0]
+			.concat(line.trim().split('').map(c=>c=='#'?1:0))
+			.concat([0])))
+	.concat(createArray(1,iext)).filter(arr=>Array.isArray(arr)&&arr.length>2);
+	return puz2_corners_on(arr);
+}
+function count(arr) {
+	return arr.reduce((s,lin)=>s+lin.reduce((si,e)=>e==1?si+1:si,0),0);
+}
+function fwrite(arr) {
+	return arr.map(lin=>{
+		return lin.map((elem)=>elem==1?'#':'.').join('').substring(1,iext-1)
+	}
+	).filter( (elt,idx) => idx>0&&idx<iext-1 ).join('\n');
+}
+
+function update(arr) {
+	var arr = next(arr);
+	document.getElementById('field').innerHTML = fwrite(arr);
+	var cres = count(arr);
+	document.getElementById('count').innerHTML = cres;
+	return arr;
+}
+
+function run() {
+	var arr = parse();
+	var i = 0;
+	document.getElementById('count').innerHTML = count(arr);
+	var step = function() {
+		arr = update(arr);
+		++i;
+		if (i<steps) {
+			setTimeout(step, 100);
+		}
+	}
+	setTimeout(step, 100);
+}
+
+</script>
+<body>
+<div id="count"></div>
+<pre id="field">
+##.#.#
+...##.
+#....#
+..#...
+#.#..#
+####.#
+</pre>
+</body>

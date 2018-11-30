@@ -1,0 +1,10 @@
+cpy 5 a
+cpy 7 b
+mmul a b
+nop
+nop
+nop
+nop
+nop
+nop
+nop
