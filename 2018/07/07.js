@@ -32,7 +32,7 @@ contents.forEach(line => {
     }
 })
 console.log(graph);
-var root = Object.keys(graph).find(node => Object.keys(graph[node]).length===0);
+var root = Object.keys(graph).sort().find(node => Object.keys(graph[node]).length===0);
 opened[root] = 1;
 var step = 0;
 var result = "";
