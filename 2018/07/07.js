@@ -16,41 +16,56 @@ function decimalToHex(d, padding) {
 var re = /Step (.) must be finished before step (.) can begin./
 var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0);
 //var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
-var graph = {}
-var incomplete = {}
-var opened = {}
-var completed = {}
-contents.forEach(line => {
-    let match = re.exec(line);
-    if (match) {
-        let [dst,src] = match.slice(1);
-        graph[dst] = graph[dst]||{};
-        graph[src] = graph[src]||{};
-        graph[src][dst] = 1;
-        incomplete[src] = 1;
-        incomplete[dst] = 1;
-    }
-})
-console.log(graph);
-var root = Object.keys(graph).sort().find(node => Object.keys(graph[node]).length===0);
-opened[root] = 1;
-var step = 0;
-var result = "";
-while(Object.keys(incomplete).length>0&&step<200) {
-    var openeds = Object.keys(opened).sort();
-    var target = openeds[0];
-    result+=target;
-    delete opened[target];
-    completed[target] = 1;
-    delete incomplete[target];
-    var candidates = Object.keys(incomplete).filter(node => {
-        var deps = Object.keys(graph[node]).filter(inode => {
-            return !!!completed[inode];
-        })
-        return deps.length === 0;
+
+function solve(input, workers, dur) {
+    var graph = {}
+    var incomplete = {}
+    var opened = {}
+    var completed = {}
+    input.forEach(line => {
+        let match = re.exec(line);
+        if (match) {
+            let [dst, src] = match.slice(1);
+            graph[dst] = graph[dst] || {};
+            graph[src] = graph[src] || {};
+            graph[src][dst] = 1;
+            incomplete[src] = 1;
+            incomplete[dst] = 1;
+        }
     })
-    candidates.forEach(node => opened[node] = 1);
-    ++step;
+    console.log(graph);
+    var result = "";
+    var step = 0;
+    while((Object.keys(incomplete).length>0||Object.keys(opened).length>0)&&step<200000) {
+        Object.keys(opened).forEach(node => {
+            opened[node]--;
+            if (opened[node]===0) {
+                delete opened[node];
+                completed[node] = 1;
+                result+=node;
+            }
+        })
+        var candidates = Object.keys(incomplete).filter(node => {
+            var deps = Object.keys(graph[node]).filter(inode => {
+                return !!!completed[inode];
+            })
+            return deps.length === 0;
+        })
+        candidates.sort();
+        while(candidates.length&&Object.keys(opened).length<workers) {
+            var cd = candidates.splice(0,1)[0];
+            opened[cd] = dur(cd);
+            delete incomplete[cd];
+        }
+        /*console.log(step);    
+        console.log("C",completed)    
+        console.log("O",opened);
+        console.log("I",incomplete);*/
+        ++step;
+    }
+    return [result, step-1];
 }
-console.log(result);
+
+console.log(solve(contents, 1, ()=>1));
+console.log(solve(contents, 5, (node)=>61+node.charCodeAt(0)-"A".charCodeAt(0)));
 
