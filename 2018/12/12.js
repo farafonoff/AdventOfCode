@@ -63,15 +63,19 @@ function getAns(ts) {
     },0)
     return ans;
 }
+function getAns2(g) {
+    return g*42+61;
+}
 var ts = is;
+console.log(getAns2(50000000000))
 // solution for 2nd: run to 10000 and see progression
 for(let g=0;g<20;++g) {
     ts = next(ts);
-    if (g%1000==999||g<30) {
+    if (g%1000==999||g<1000) {
         console.log(g+1, getAns(ts));
     }
 }
 console.log(getAns(ts));
-console.log(61+42*50000000000)
+
 //console.log(base);
 
