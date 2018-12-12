@@ -47,9 +47,15 @@ function next(s = '') {
         if (!output[i+2]) output[i+2] = '.'
     }
     let sr = output.join('');
-    if (sr.indexOf('#') < 3) {
+    let ps = sr.indexOf('#');
+    if (ps < 3) {
         base -= protector.length;
         sr = protector+sr;
+    } else {
+        if (ps > 10) {
+            sr = sr.slice(5);
+            base += 5;
+        }
     }
     if (sr.lastIndexOf('#') > sr.length-4) {
         sr += protector;
@@ -63,19 +69,26 @@ function getAns(ts) {
     },0)
     return ans;
 }
-function getAns2(g) {
-    return g*42+61;
-}
 var ts = is;
-console.log(getAns2(50000000000))
 // solution for 2nd: run to 10000 and see progression
-for(let g=0;g<20;++g) {
+let last = 0;
+let ans;
+let diff;
+let ans1;
+let testlim = 500;
+for(let g=0;g<testlim;++g) {
     ts = next(ts);
+    last = ans;
+    ans = getAns(ts);
+    diff = ans - last;
+    if (g===(20-1)) ans1 = ans;
     if (g%1000==999||g<1000) {
-        console.log(g+1, getAns(ts));
+        console.log(g+1, base, ans, last-ans, ts);
     }
 }
-console.log(getAns(ts));
+let ans2 = (50000000000-testlim)*diff + ans;
+console.log(ans1, ans2);
+
 
 //console.log(base);
 
