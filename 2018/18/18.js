@@ -94,25 +94,25 @@ function step() {
 }
 
 let period = []
-
+let peri;
+let ps = new HM();
 for(let i=1;i<1200;++i) {
     map = step();
     if (i===10) {
         console.log('Part 1: ', calc())
     }
-    period[i]=calc()
+    let val = calc();
+    if (ps.has(val)) {
+        peri = i-ps.get(val)
+        //console.log(i, peri);
+    }
+    ps.set(val, i)
+    period[i]=val
 }
 //console.log(period.slice(900,956))
-let peri;
+console.log('Period: ',peri);
 let plen = period.length-1;
-for(let ch = 1;ch<100;++ch) {
 
-    if (period[plen-ch] === period[plen] && period[plen-ch] === period[plen-ch-ch] && period[plen-ch] === period[plen-ch-ch-ch]) {
-        console.log('Period: ',ch);
-        peri = ch;
-        break;
-    }
-}
 let q2 = (1000000000-plen)%peri;
 //console.log(period);
 console.log('Part 2: ',period[plen-peri*3+q2]);
