@@ -1,5 +1,5 @@
 //  19   00:22:38   323      0   01:31:21   318      0
-// day2 solved by careful debugging
+// part2 solved by careful debugging
 const fs = require('fs');
 const HM = require('hashmap')
 const md5 = require('js-md5')
@@ -225,14 +225,18 @@ contents.forEach(line => {
         program.push([opcode, args, cmd[0]])
     }
 })
-console.log(exec(ipa, program, 0, Infinity));
-let sample = exec(ipa, program, 1, 100);
-let ans = 0;
-for(let i=1;i*i<=sample;++i) {
-    if (sample % i===0) {
-        ans+=i;
-        ans+=sample/i;
+function calcSumDivisors(num) {
+    let ans = 0;
+    for(let i=1;i*i<=num;++i) {
+        if (num % i===0) {
+            ans+=i;
+            ans+=num/i;
+        }
     }
+    return ans;
 }
-console.log(ans)
+//console.log(exec(ipa, program, 0, Infinity));
+console.log(calcSumDivisors(exec(ipa, program, 0, 40)));
+console.log(calcSumDivisors(exec(ipa, program, 1, 40)));
+
 
