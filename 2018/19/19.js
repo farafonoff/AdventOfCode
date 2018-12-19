@@ -188,7 +188,7 @@ function exec(ip, program, init, limit) {
         //debugg[ipn].push(regs[ip])        
         ++iter;
         if (iter > limit) {
-            return Math.max.apply(null,regs);
+            return regs;
         }
         /*if (iter%1==0) {
             debugg.forEach((d, di) => {
@@ -236,7 +236,8 @@ function calcSumDivisors(num) {
     return ans;
 }
 //console.log(exec(ipa, program, 0, Infinity));
-console.log(calcSumDivisors(exec(ipa, program, 0, 40)));
-console.log(calcSumDivisors(exec(ipa, program, 1, 40)));
+console.log(calcSumDivisors(Math.max.apply(null,exec(ipa, program, 0, 40))));
+//console.log(exec(ipa, program, 1, 40))
+console.log(calcSumDivisors(Math.max.apply(null,exec(ipa, program, 1, 40))));
 
 
