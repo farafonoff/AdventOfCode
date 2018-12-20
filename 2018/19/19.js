@@ -236,8 +236,9 @@ function calcSumDivisors(num) {
     return ans;
 }
 //console.log(exec(ipa, program, 0, Infinity));
+console.log(exec(ipa, program, 0, Infinity))
 console.log(calcSumDivisors(Math.max.apply(null,exec(ipa, program, 0, 40))));
-//console.log(exec(ipa, program, 1, 40))
+console.log(exec(ipa, program, 1, 1000))
 console.log(calcSumDivisors(Math.max.apply(null,exec(ipa, program, 1, 40))));
 
 
