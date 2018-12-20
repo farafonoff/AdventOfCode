@@ -1,3 +1,7 @@
+// 20   02:43:17   517      0   02:44:54   461      0
+//1. js doesn't have native partial match (analog of .hitEnd in java)
+//2. node.js on windows has limited stack size, so recursion can be done with setImmediate
+
 const fs = require('fs');
 const HM = require('hashmap')
 const md5 = require('js-md5')
@@ -141,74 +145,60 @@ function decimalToHex(d, padding) {
 }
 
 var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0);
-//var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 
-/*function walk(arr, idx, paths) {
-    let result = '';
-    for(let i=idx;i<arr.length;++i) {
-        console.log(arr[i])
-        if (arr[i] === '(') {
-            let branches = [];
-            while(arr[i]!==')') {
-                let [res, nidx] = walk(arr, i+1, paths);
-                console.log(res)
-                i = nidx;
-                branches.push(res);
-            }
-            console.log(branches);
-            result += Math.min.apply(null, branches);
-        } else
-        if (arr[i] === '|') {
-            return [result, i]
-        } else
-        if (arr[i] === ')') {
-            return [result, i]
-        } else {
-            result += arr[i];
-        }
-    }
-    return [result];
-}
-
-function solve(str) {
-    let arr = `(${str.slice(1, str.length-1)})`.split('');
-    return walk(arr, 0)
-}
-*/
 let directions = {
     S: [0, 1],
     N: [0, -1],
     E: [1, 0],
     W: [-1, 0],
 };
+let save_stack = true;
 let sw = (p1, p2) => [p1[0]+p2[0], p1[1] + p2[1]];
 let distances = new HM();
-function solve(line) {
-    let re = new RegExp(line).toPartialMatchRegex();
-    function dfs(prefix, depth, point) {
-        let matchez = false;
-        if (!distances.has(point) || distances.get(point) > depth) {
-            distances.set(point, depth)
-        }
-        Object.keys(directions).forEach(key => {
-            let s = prefix+key;
-            if (re.exec(s)) {
-                //console.log(s);
-                dfs(s, depth+1, sw(point, directions[key]));
-            }
-        })
-    }
-    dfs("", 0, [0,0])
-    let md = 0;
+let calcResult = () => {
+    var md = 0;
+    var a2 = 0;
     distances.keys().forEach(point => {
-        if (distances.get(point) > md) {
-            md = distances.get(point);
+        var dd = distances.get(point)
+        if (dd > md) {
+            md = dd;
+        }
+        if (dd >= 1000) {
+            ++a2;
         }
     });
-    return md;
+    console.log([md, a2]);
+    return [md, a2];
+}
+function solve(line) {
+    var re = new RegExp(line).toPartialMatchRegex();
+    function dfs(prefix, depth, point) {
+        var matchez = false;
+        if (!distances.has(point) || distances.get(point) > depth) {
+            distances.set(point, depth)
+            Object.keys(directions).forEach(key => {
+                var s = prefix + key;
+                if (re.exec(s)) {
+                    //console.log(s);
+                    if (save_stack) {
+                        setImmediate(() => dfs(s, depth + 1, sw(point, directions[key])));
+                    } else {
+                        dfs(s, depth + 1, sw(point, directions[key]))
+                    }
+                }
+            })
+        }
+    }
+    dfs("", 0, [0, 0])
+    if (save_stack) {
+        process.on('exit', calcResult);
+    } else {
+        calcResult();
+    }
+    
 }
 
 
 contents.forEach(line => {
-    console.log(solve(line));
+    solve(line);
 })
