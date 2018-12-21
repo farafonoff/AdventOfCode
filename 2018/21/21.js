@@ -1,3 +1,5 @@
+// 21   00:32:13   169      0   04:42:08   792      0
+// optimized input via divi
 const fs = require('fs');
 const HM = require('hashmap')
 const md5 = require('js-md5')
@@ -168,26 +170,52 @@ let opcodes = [
             return result;
         }
     },
+    {
+        m: 'divi', a: (args, rs) => {
+            let result = [...rs];
+            checkRange(args[1], 0, 3)
+            checkRange(args[2], 0, 3)
+            checkRange(args[3], 0, 3)
+            result[args[3]] = (Math.floor(rs[args[1]]/args[2]));
+            return result;
+        }
+    },
 ]
 let debugg = []
-function exec(ip, program, init, limit) {
-    let regs = new Array(6).fill(0);
-    regs[0] = init;
+let hm = new HM();
+let pout = 0;
+let out = 0;
+function exec(ip, program, iregs, limit) {
+    let regs = iregs;
     let iter = 0;
-    while(regs[ip]<program.length&&regs[ip]>=0) {
+    while (regs[ip] < program.length && regs[ip] >= 0) {
         let ipn = regs[ip];
         let cmd = program[regs[ip]];
-        //console.log(regs, cmd);
-        //debugg[ipn] = [regs]
-        if (_.isEqual(cmd[1], [15, 5, 0, 3])) {
-            console.log(cmd, regs)
-            console.log('################')
+        if (cmd[0]>=0) {
+            //console.log(regs, cmd);
+            //debugg[ipn] = [regs]
+            if (cmd[1][0]===15) { //eqrr
+                //console.log(cmd, regs)
+                pout = out;
+                out = regs[cmd[1][1]];
+                if (pout === 0) {
+                    console.log('Part1: ', out)
+                }
+                if (!hm.has(out)) {
+                    hm.set(out, pout);
+                } else {
+                    console.log('loop', pout, out, hm.get(out));
+                    console.log('Part2: ', pout);
+                    break;
+                }
+                //console.log('################')
+            }
+            regs = opcodes[cmd[0]].a(cmd[1], regs);
+            //console.log(opcodes[cmd[0]].m, cmd[1], regs);
+            /*debugg[ipn].push(cmd)
+            debugg[ipn].push(regs)
+            debugg[ipn].push(ipn)*/
         }
-        regs = opcodes[cmd[0]].a(cmd[1], regs);
-        console.log(opcodes[cmd[0]].m, cmd[1], regs);
-        /*debugg[ipn].push(cmd)
-        debugg[ipn].push(regs)
-        debugg[ipn].push(ipn)*/
         ++regs[ip];
         //debugg[ipn].push(regs[ip])        
         ++iter;
@@ -230,5 +258,8 @@ contents.forEach(line => {
 })
 
 //console.log(exec(ipa, program, 0, Infinity));
-console.log(exec(ipa, program, 0, Infinity))
+//console.log(program)
+exec(ipa, program, [ 0, 0, 0, 0, 0, 0 ], Infinity);
 
+
+    
