@@ -16,8 +16,8 @@ function decimalToHex(d, padding) {
 
 /*let depth = 8787
 let target = [10,725,0]*/
-let depth = 8787
-let target = [10,725,0]
+let depth = 3558
+let target = [15,740,0]
 let targetp = target.slice(0,2);
 let zero = [0,0];
 let hm = new HM();

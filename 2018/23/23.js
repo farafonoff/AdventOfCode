@@ -30,8 +30,7 @@ let inrange = bots.filter(bot => {
 })
 console.log(max, inrange.length)
 
-let xss = bots.map((bot,idx) => [bot[0]-bot[3],bot[0]+bot[3],idx]);
-let yss = bots.map((bot,idx) => [bot[1]-bot[3],bot[1]+bot[3],idx]);
-let zss = bots.map((bot,idx) => [bot[2]-bot[3],bot[2]+bot[3],idx]);
-xss.sort((b1,b2) => b1[0]-b2[0]);
-console.log(xss)
+console.log(`array[0..${bots.length-1}] of var int: cubes;`)
+bots.forEach((bot,idx) => {
+    console.log(`constraint cubes[${idx}]=if (abs(x- ${bot[0]})+abs(y- ${bot[1]})+abs(z- ${bot[2]})<=${bot[3]}) then 1 else 0 endif;`)
+})
