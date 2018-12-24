@@ -53,7 +53,7 @@ contents.forEach(line => {
                 }
             })
         }
-        console.log(group)
+        //console.log(group)
         armys[state].push(group)
     }
 })
@@ -164,29 +164,30 @@ function simulate(fighters, boost) {
         if (!end&&sum===oldsum) {
             return ('stuck')
         }
-        if (round%10000 === 9999) {
+        /*if (round%10000 === 9999) {
             console.log(round, end, sum)
-        }
+        }*/
         oldsum = sum;
         ++round;
     }
     return [end, sum];
 }
 
-ans1 = simulate(fighters, 0)
-console.log(ans1)
+/*ans1 = simulate(fighters, 0)
+console.log(ans1)*/
 let lbound = 0
 let ubound = 1000000000;
-let ans2;
-console.log(simulate(fighters, 1000))
+let ans2,res2;
+console.log('Part 1:', simulate(fighters, 0))
 while((ubound-lbound)>1) {
     ans2 = Math.floor((ubound+lbound)/2)
-    console.log(lbound, ubound, ans2)
-    let ans = simulate(fighters, ans2)
-    console.log(ans)
-    if (ans[0]==='immune') {
+    //console.log(lbound, ubound, ans2)
+    res2 = simulate(fighters, ans2)
+    //console.log(ans)
+    if (res2[0]==='immune') {
         ubound = ans2;
     } else {
         lbound = ans2;
     }
 }
+console.log('Part 2:', simulate(fighters, ubound))
