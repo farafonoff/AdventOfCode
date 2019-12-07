@@ -46,10 +46,9 @@ let takeparam = (opmode, num, ip, line) => {
         return line[line[ip+num + 1]];
     }
 }
-let rint = (line, inputs, limit) => {
+let rint = function* (line, inputs, limit) {
     let ip = 0;
     limit = limit || Infinity;
-    let output = [];
     for (let i = 0; i<limit; ++i) {
         let [opcode, opmode] = parsecode(line[ip]);
         //console.log(opcode, opmode)
@@ -65,14 +64,20 @@ let rint = (line, inputs, limit) => {
                 break;
             }
             case 3: {
+                if (inputs.length===0) {
+                    inputs = yield;
+                    //console.log('yield1', inputs);
+                }
                 line[line[ip+1]] = inputs.shift();
                 ip += 2;
                 break;
             }
             case 4: {
                 let val = takeparam(opmode, 0, ip, line);
-                output.push(val);
-                //console.log(val);
+                let newinput = yield [val];
+                //console.log(newinput);
+                inputs = [...inputs, ...newinput];
+                //console.log(val, newinput);
                 ip += 2;
                 break;
             }
@@ -112,7 +117,8 @@ let rint = (line, inputs, limit) => {
             }
             case 99: {
                 //console.log(line);
-                return output;
+                //return output;
+                return;
             }
             default: {
                 throw 'bad ' + ip
@@ -120,7 +126,7 @@ let rint = (line, inputs, limit) => {
         }
     }
 }
-let inputz = [0,1,2,3,4];
+let inputz = [5,6,7,8,9];
 let shuf = (prf, inz) => {
     let variantz = [];
     if (inz.length>0) {
@@ -136,16 +142,34 @@ let shuf = (prf, inz) => {
 let variantz = shuf([], inputz);
 let program = contents[0];
 let max = 0;
+//variantz=[[9,8,7,6,5]];
 variantz.forEach((vr) => {
+    let generators = vr.map(v => {
+        let line = [...program];
+        return rint(line, [v]);
+    })
+    generators.forEach(gen => gen.next());
     try {
-        //console.log(line)
-        let ans = vr.reduce((pv,cv) => {
-            let line = [...program];
-            let output = rint(line, [cv, pv]);
-            return output[0];
-        }, 0);
-        console.log(ans);
-        if (ans>max) max = ans;
+        let initial = [0];
+        try {
+            let adone = false;
+            while (!adone) {
+                generators.forEach((gen, idx) => {
+                    let { value, done } = gen.next(initial);
+                    /*console.log('genn1', value,done);
+                    while (!value && !done) {
+                        let obj = gen.next([]);
+                        value = obj.value; done = obj.done;
+                    }*/
+                    adone = adone || done;
+                    if (value === undefined) throw 'done';
+                    //console.log('genn', idx, value, done, adone);
+                    initial = value;
+                });
+            }
+        } catch (e) { }
+        console.log(initial);
+        if (initial[0]>max) max = initial[0];
         //console.log(line);
     } catch(e) {
         console.log(e)
