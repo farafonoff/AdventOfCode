@@ -203,7 +203,7 @@ let draw = (map) => {
     let bufs = [];
     for (let y = uc[1]; y >= lc[1]; --y) {
         let buf = [];
-        for (let x = lc[0]; x < uc[0]; ++x) {
+        for (let x = lc[0]; x <= uc[0]; ++x) {
             //console.log([x,y], map.get([x,y]))
             let val = map.get([x, y]);
             buf.push(sprites[val])
