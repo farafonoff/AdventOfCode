@@ -41,7 +41,6 @@ let totals = {
 }
 
 let buildChem = (count, chemId) => {
-    //console.log(count, chemId);
     if (chemId === 'ORE') {
         depot.ORE -= count;
         if (depot.ORE < 0) throw 'out';
@@ -51,14 +50,12 @@ let buildChem = (count, chemId) => {
         let am = Math.min(depot[chemId], count);
         count -= am;
         depot[chemId] -= am;
-        //console.log('UDEP', chemId, am)
     }
     if (count === 0) return 0;
     let reaction = reactions.find(re => re.rp.chem === chemId);
     let prodCount = Math.max(count, reaction.rp.count);
     let multiplier = Math.ceil(prodCount/reaction.rp.count);
     prodCount = reaction.rp.count * multiplier;
-    //console.log(chemId, reaction.rp.count, multiplier, prodCount)
     let result = 0;
     reaction.lp.forEach(src => {
         result += buildChem(src.count*multiplier, src.chem);
@@ -67,8 +64,6 @@ let buildChem = (count, chemId) => {
     if (remain > 0) {
         depot[chemId] = _.get(depot, chemId, 0) + remain;
     }
-    //console.log('SDEP', chemId, remain, depot)
-    //totals[chemId] = _.get(totals, chemId, 0) + ;
     return result;
 }
 
