@@ -191,7 +191,8 @@ let patchDir = (pos, dir) => {
     }
 }
 let draw = (map) => {
-    let sprites = ['#', ' ', 'O'];
+    let sprites = ['#', '.', 'O'];
+    let undef = ' ';
     let uc = [-Infinity, -Infinity], lc = [Infinity, Infinity];
     map.keys().forEach(poz => {
         uc[0] = Math.max(uc[0], poz[0])
@@ -206,7 +207,7 @@ let draw = (map) => {
         for (let x = lc[0]; x <= uc[0]; ++x) {
             //console.log([x,y], map.get([x,y]))
             let val = map.get([x, y]);
-            buf.push(sprites[val])
+            buf.push(sprites[val] || undef)
         }
         bufs.push(buf.join(''))
     }
