@@ -275,7 +275,7 @@ for(let y=0;y<10000000;++y) {
         console.log(l, r);
     }*/
     if (ms !== Infinity) {
-        console.log(ms, ans)
+        console.log(ans)
         break;
     }
     //
