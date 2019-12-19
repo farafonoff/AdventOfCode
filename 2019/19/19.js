@@ -209,74 +209,29 @@ for(let y=0;y<50;++y) {
     }
     let l = line.indexOf(1);
     let r = line.lastIndexOf(1);
-    console.log(line.join(''), l,r);
+    //console.log(line.join(''), l,r);
 }
 console.log(sum)
 
-let l = 0;
 let r = 0;
-let check = (x,y) => {
-    for(let i=0;i<100;++i) {
-        let line = [];
-        for(let j=0;j<100;++j) {
-            line.push(getRay(j+x, i+y))
-        }
-        console.log(line.join(''));
-    }
-}
-let ms = Infinity;
 let ans = 0;
-let ds = (x,y) => x*x+y*y;
 let ss = 99;
 for(let y=0;y<10000000;++y) {
     line = []
     for(let x=r;x<r+4;++x) {
-        //console.log(state.output)
         let v = getRay(x,y)
         line.push(v);
     }
-    //l = line.indexOf(1);
     let ru = line.lastIndexOf(1);
     if (ru!==-1) {
         r = r+ru;
     }
-    line = [];
-    for(let x=l;x<l+4;++x) {
-        //console.log(state.output)
-        let v = getRay(x,y)
-        line.push(v);
-    }
-    let lu = line.indexOf(1);
-    if (lu!==-1) {
-        l = l+lu;
-    }
 
     if (r>100&&y>100) {
         if (getRay(r-ss, y+ss)===1) {
-            let dist = ds(r-ss, y)
-            if (dist < ms) {
-                ms = dist;
-                ans = (r-ss)*10000+y;
-            }
-            //console.log(r-ss, y);
-            //break;
-        }
-        if (getRay(l+ss, y-ss)===1) {
-            //console.log(l, y-ss);
-            let dist = ds(l, y-ss)
-            if (dist < ms) {
-                ms = dist;
-                ans = (l)*10000+(y-ss);
-            }
-            //break;
+            ans = (r-ss)*10000+y;
+            console.log(ans);
+            break;
         }
     }
-    /*if (y%100===0||y<50) {
-        console.log(l, r);
-    }*/
-    if (ms !== Infinity) {
-        console.log(ans)
-        break;
-    }
-    //
 }
