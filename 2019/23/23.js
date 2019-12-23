@@ -78,12 +78,12 @@ let rints = function (line, inputs, state) {
             break;
         }
         case 3: {
-            if (inputs.length === 0) {
+            if (state.inputs.length === 0) {
                 state.shouldInput = true;
                 return state;
             }
             state.shouldInput = false;
-            wparam(opmode, 0, ip, line, inputs.shift())
+            wparam(opmode, 0, ip, line, state.inputs.shift())
             ip += 2;
             break;
         }
@@ -179,6 +179,108 @@ let draw = (map) => {
     console.log(bufs.join('\n'));
 }
 
+let comps = [];
+for(let i=0;i<50;++i) {
+    let code = [...contents[0]]
+    let state = rints(code, [i]);
+    //console.log(state)
+    let queue = [];
+    let send = [];
+    let pc = {
+        code, state, queue, send
+    }
+    comps.push(pc);
+}
+
+
+let nat = {
+    state: null,
+    history: null,
+    part1done: false,
+    nat: function(pak) {
+        if (!this.part1done) {
+            console.log('part 1', pak.Y);
+            this.part1done = true;
+        }
+        //console.log('NAT', pak)
+        this.state = pak;
+    },
+    idle: function() {
+        //console.log(this)
+        if (this.state) {
+            if (this.history === this.state.Y) {
+                console.log('part 2', this.state.Y);
+                throw 'done'
+            }
+            this.history = this.state.Y;
+            let pak = this.state;
+            send(0, pak.X, pak.Y)
+            //console.log('IDLE', pak);
+            //console.log(this.history);
+            this.state = null;
+        }
+    }
+}
+function send(A, X, Y) {
+    if (A === 255) {
+        //console.log(A, X, Y);
+        nat.nat({X, Y});
+        //throw 'done'
+    } else {
+        if (comps[A]) {
+            comps[A].queue.push({ X, Y });
+            //console.log(comps[A].queue)
+        } else {
+            //console.log('invalid', A, X, Y);
+        }
+    }
+}
+
+for(let i=0;;++i) {
+    let idle = true;
+    comps.forEach((comp, id) => {
+        let nextState = rints(comp.code, [], comp.state);
+        //console.log(id, nextState)
+        if (nextState.output!==undefined) {
+            //console.log(id, nextState.output, comp.send)
+            comp.send.push(nextState.output);
+            if (comp.send.length === 3) {
+                //console.log(id, comp.send);
+                send.apply(null, comp.send);
+                comp.send = [];
+            }
+            comp.idle = false;
+        }
+        if (nextState.shouldInput) {
+            if (!comp.queue.length) {
+                nextState = rints(comp.code, [-1], comp.state)
+                comp.idle = true;
+                //console.log(id, 'recv', -1);
+            } else {
+                let pak = comp.queue.shift();
+                nextState = rints(comp.code, [pak.X, pak.Y], comp.state);
+                //console.log(id, 'recv', pak);
+                comp.idle = false;
+            }
+        }
+        comp.state = nextState;
+        if (!comp.idle) {
+            idle = false;
+        }
+        //console.log('comp', id, comp.state)
+        //console.log(comp.state)
+    })
+    if (idle) {
+        //console.log(idle)
+        nat.idle();
+    }
+}
+/*comps.forEach(comp => {
+    console.log(comp.queue, comp.send, comp.state.ip);
+    console.log(rints(comp.code, [], comp.state))
+})*/
+
+/*
 
 code = [...contents[0]]
 let state = rints(code, []);
@@ -194,3 +296,4 @@ while (!state.done) {
     }
     state = rints(code, [], state)
 };
+*/
