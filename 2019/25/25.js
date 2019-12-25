@@ -354,6 +354,7 @@ function collectDFS(code, state, item, visited, backtrack) {
         }
         state = rints(code, [], state)
     };
+    console.log(lines)
     console.log('DONE!!')
 }
 let code = [...contents[0]]
@@ -392,6 +393,9 @@ function collectItems(myitems) {
         
     })*/
 }
+collectItems([ 'monolith', 'astrolabe', 'tambourine', 'dark matter' ]);
+return;
+
 let baditems = ['giant electromagnet', 'infinite loop', 'photons', 'molten lava', 'escape pod'];
 
 function dfs2(myitems, remitems) {
