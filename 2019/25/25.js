@@ -277,6 +277,7 @@ function collectDFS(code, state, item, visited, backtrack) {
         if (state.shouldInput) {
             //console.log(lines);
             let roomName = lines[3];
+            //console.log(lines)
             if (!roomName.startsWith('==')) {
                 console.log(lines)
                 return null;
@@ -287,7 +288,7 @@ function collectDFS(code, state, item, visited, backtrack) {
                     console.log(lines)
                 }
                 //console.log(msg);
-                return { done: true, message: msg};
+                return { done: true, message: msg, code, state};
             }
             if (roomName === '== Security Checkpoint ==' && item !== '') {
                 //console.log(lines)
@@ -312,7 +313,7 @@ function collectDFS(code, state, item, visited, backtrack) {
             if (items.indexOf(item)!== -1) {
                 //console.log(lines);
                 let cmd = `take ${item}`;
-                console.log(cmd, backtrack);
+                //console.log(cmd, backtrack);
                 let newcode = [...code];
                 let newstate = pushstr(newcode, state, cmd);
                 newstate = pushstr(newcode, newstate, backtrack);
@@ -354,8 +355,10 @@ function collectDFS(code, state, item, visited, backtrack) {
         }
         state = rints(code, [], state)
     };
-    console.log(lines)
     console.log('DONE!!')
+    //lines.forEach(ll => console.log(ll))
+    return { done: true, message: lines.join('\n')}
+    //console.log('DONE!!')
 }
 let code = [...contents[0]]
 let state = rints(code, []);
@@ -365,58 +368,78 @@ states.values().forEach(val => {
     //console.log(val)
     allitems = allitems.concat(val.items);
 })
-console.log(allitems.length, allitems)
+//console.log(allitems.length, allitems)
 
-function collectItems(myitems) {
+function collectItems(myitems, mstate) {
     let code = [...contents[0]]
     let state = rints(code, []);
-    let mstate = { code, state };
+    mstate = mstate || { code, state };
     myitems.forEach(item => {
-        console.log('++++', item)
+        //console.log('++++', item)
         let visited = new HM();
         mstate = collectDFS(mstate.code, mstate.state, item, visited)
         if (mstate === null) {
             throw 'badset'
         }
     })
+    let allState = _.cloneDeep(mstate);
     //console.log(mstate)
     let estate = collectDFS(mstate.code, mstate.state, '', new HM())
     let msg = estate.message;
-    console.log(estate.message);
+    //console.log(estate.message);
+    let res = allState;
+    res.val = 0;
     if (msg.indexOf('lighter') !== -1) {
-        return -1;
+        res.val = -1;
     }
-    return 0;
+    if (msg.indexOf('Santa') !== -1)  {
+      res.val = 1;
+    }
+    res.message = estate.message;
+    return res;
     //console.log(visited)
     /*collectDFS(code, state, myitems);
     remitems.forEach((item, index) => {
         
     })*/
 }
-collectItems([ 'monolith', 'astrolabe', 'tambourine', 'dark matter' ]);
-return;
+//collectItems([ 'monolith', 'astrolabe', 'tambourine', 'dark matter' ]);
+//return;
 
 let baditems = ['giant electromagnet', 'infinite loop', 'photons', 'molten lava', 'escape pod'];
 
-function dfs2(myitems, remitems) {
+function dfs2(myitems, nextitem, remitems, oldstate) {
+    oldstate = _.cloneDeep(oldstate);
+    //console.log(myitems, nextitem, remitems)
     let fitem = remitems.shift();
+    let ans;
     try {
         let res = 0;
-        if (myitems.length) {
-            console.log(myitems);
-            res = collectItems(myitems);
+        let estate = oldstate;
+        if (nextitem) {
+            myitems = [...myitems, nextitem];
+            estate = collectItems([nextitem], oldstate);
+            res = estate.val;
+        }
+        if (res === 1) {
+          console.log(myitems);
+          //console.log(estate.message);
+          //throw estate.message;
+          return estate.message;
         }
         if (fitem && res === 0) {
-            dfs2([...myitems, fitem], remitems);
-            dfs2([...myitems], remitems);
+            ans = dfs2(myitems, fitem, remitems, estate) || dfs2(myitems, null, remitems, estate);
         }
     } catch (err) {
         console.log(err, myitems);
     }
-    remitems.unshift(fitem);
+    if (fitem) {
+      remitems.unshift(fitem);
+    }
+    return ans;
 }
 
 allitems = allitems.filter(item => !baditems.includes(item));
 
-dfs2([], allitems);
+console.log(dfs2([],null, allitems));
 //collectItems(['cake']);
