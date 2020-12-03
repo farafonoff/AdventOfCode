@@ -12,7 +12,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init": "mkdir ${npm_config_day}; cp template.js ${npm_config_day}/${npm_config_day}.js; touch ${npm_config_day}/input;git add ${npm_config_day}/*;git commit -m \"init day ${npm_config_day}\""
   },
   "repository": {
     "type": "git",
