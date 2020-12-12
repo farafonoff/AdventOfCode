@@ -3,7 +3,7 @@ const HM = require('hashmap')
 const md5 = require('js-md5')
 const PQ = require('js-priority-queue')
 const _ = require('lodash')
-const infile = process.argv[1] || "input"
+const infile = process.argv[2] || "input"
 function decimalToHex(d, padding) {
     var hex = Number(d).toString(16);
     padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
