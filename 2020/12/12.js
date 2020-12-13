@@ -17,8 +17,9 @@ function decimalToHex(d, padding) {
   return hex;
 }
 
+const infile = process.argv[2] || "input";
 var contents = fs
-  .readFileSync("input", "utf8")
+  .readFileSync(infile, "utf8")
   .split("\n")
   .map((s) => s.trim())
   .filter((s) => s.length > 0)
