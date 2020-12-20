@@ -4,6 +4,14 @@ const md5 = require('js-md5')
 const PQ = require('js-priority-queue')
 const _ = require('lodash')
 const infile = process.argv[2] || "input"
+
+function trnum(val: string): number | string {
+  let nn = Number(val);
+  if (isFinite(nn)) {
+    return nn;
+  }
+  return val;
+}
 function decimalToHex(d, padding) {
     var hex = Number(d).toString(16);
     padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
