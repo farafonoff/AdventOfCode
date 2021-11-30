@@ -1,8 +1,8 @@
-const fs = require('fs');
-const HM = require('hashmap')
-const md5 = require('js-md5')
-const PQ = require('js-priority-queue')
-const _ = require('lodash')
+import fs from 'fs';
+import HM from 'hashmap';
+import md5 from 'js-md5';
+import PQ from 'js-priority-queue';
+import _ from 'lodash';
 const infile = process.argv[2] || "input"
 
 function trnum(val: string): number | string {
