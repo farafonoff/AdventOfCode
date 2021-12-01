@@ -30,9 +30,33 @@ var contents = fs
   .readFileSync(infile, "utf8")
   .split("\n")
   .map((s) => s.trim())
-  .filter((s) => s.length > 0);
+  .filter((s) => s.length > 0)
+  .map((s) => Number(s));
 //var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
-contents.forEach((line) => {
-  console.log(line);
+function solve1(items) {
+  let ans1 = 0;
+  items.forEach((line, idx) => {
+    if (idx > 0) {
+      if (line > items[idx - 1]) {
+        ++ans1;
+      }
+    }
+  });
+  return ans1;
+}
+
+console.log(solve1(contents));
+
+let acc = 0;
+let windows = [];
+contents.forEach((line, idx) => {
+  if (idx > 1) {
+    windows.push(acc);
+  }
+  acc += line;
+  if (idx > 2) {
+    acc -= contents[idx - 3];
+  }
 });
+console.log(solve1(windows));
