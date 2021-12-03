@@ -16,7 +16,8 @@
     "test": "cd ${npm_config_day}; ts-node ${npm_config_day} input.test",
     "prepareday": "mkdir -p ${npm_config_day}; cp template.ts ${npm_config_day}/${npm_config_day}.ts; touch ${npm_config_day}/input;touch ${npm_config_day}/input.test; npm config set day ${npm_config_day} --userconfig ./.npmrc",
     "commitday": "git add ${npm_config_day}/*;git add .npmrc;git commit -m \"init day ${npm_config_day}\"",
-    "init": "npm run prepareday --day=${npm_config_day};npm run commitday --day=${npm_config_day}"
+    "init": "npm run prepareday --day=${npm_config_day};npm run commitday --day=${npm_config_day}",
+    "fetcher": "ts-node fetcher.ts ${npm_config_day}"
   },
   "repository": {
     "type": "git",
