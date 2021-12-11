@@ -3,6 +3,7 @@ import HM from "hashmap";
 import md5 from "js-md5";
 import PQ from "js-priority-queue";
 import _ from "lodash";
+import * as console from "console";
 const infile = process.argv[2] || "input";
 
 function trnum(val: string): number | string {
@@ -82,14 +83,33 @@ function step(data) {
   return inc1;
 }
 let cave = contents;
-for (let st = 0; st < 10000000; ++st) {
-  //console.log(cave.map((cl) => cl.join("")).join("\n"));
-  try {
-    cave = step(cave);
-  } catch (sync) {
-    console.log(st + 1);
-    break;
+let animate = true;
+let reset = "\x1b[0m";
+let bright = "\x1b[1m";
+let FgYellow = "\x1b[33m";
+let FgWhite = "\x1b[37m";
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+async function solve() {
+  for (let st = 0; st < 10000000; ++st) {
+    if (animate) {
+      console.clear();
+      let ws = cave.map((cl) => cl.join("")).join("\n");
+      ws = ws.replace(/0/g, FgYellow + "0" + reset);
+      console.log(ws);
+      console.log(st + 1, ans1);
+      await delay(150);
+    }
+    //
+    try {
+      cave = step(cave);
+    } catch (sync) {
+      console.log(st + 1);
+      break;
+    }
+    if (st === 99) console.log(ans1);
+    //console.log(st + 1, ans1);
   }
-  if (st === 99) console.log(ans1);
-  //console.log(st + 1, ans1);
 }
+
+solve();
