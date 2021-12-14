@@ -26,6 +26,11 @@ function decimalToHex(d, padding) {
   return hex;
 }
 
+function incHM(tab: HM<unknown, number>, key: unknown, inc: number, dv = 0) {
+  let ov = tab.get(key) || dv;
+  tab.set(key, ov + inc);
+}
+
 var contents = fs
   .readFileSync(infile, "utf8")
   .split("\n")
