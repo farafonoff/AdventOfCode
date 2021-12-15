@@ -44,6 +44,10 @@ function dbg(expression: any, message: string): any {
   return expression;
 }
 
+function answer(part, value) {
+  console.log(`Answer ${part}: ${value}`);
+}
+
 var contents = fs
   .readFileSync(infile, "utf8")
   .split("\n")
