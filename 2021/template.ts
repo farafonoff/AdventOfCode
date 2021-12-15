@@ -32,7 +32,7 @@ function incHM(tab: HM<unknown, number>, key: unknown, inc: number, dv = 0) {
 }
 let DEBUG = true;
 
-function dbg(expression: any, message: string): any {
+function dbg(expression: any, message: string = ""): any {
   if (!DEBUG) {
     return expression;
   }
