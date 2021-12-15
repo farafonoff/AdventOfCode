@@ -30,6 +30,23 @@ function incHM(tab: HM<unknown, number>, key: unknown, inc: number, dv = 0) {
   let ov = tab.get(key) || dv;
   tab.set(key, ov + inc);
 }
+let DEBUG = true;
+
+function dbg(expression: any, message: string): any {
+  if (!DEBUG) {
+    return expression;
+  }
+  if (message) {
+    console.log(message, expression);
+  } else {
+    console.log(expression);
+  }
+  return expression;
+}
+
+function answer(part, value) {
+  console.log(`Answer ${part}: ${value}`);
+}
 
 var contents = fs
   .readFileSync(infile, "utf8")
