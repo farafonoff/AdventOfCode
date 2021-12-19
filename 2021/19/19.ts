@@ -31,7 +31,7 @@ function incHM(tab: HM<unknown, number>, key: unknown, inc: number, dv = 0) {
   let ov = tab.get(key) || dv;
   tab.set(key, ov + inc);
 }
-let DEBUG = true;
+let DEBUG = false;
 
 function dbg(expression: any, message: string = ""): any {
   if (!DEBUG) {
@@ -235,12 +235,19 @@ function match(scanner1: number[][], scanner2: number[][]) {
   //dbg(vec1.length);
   //dbg(vec2.length);
   let potentialMatches = [];
+  let Btable = new HM<number, any[]>();
+  vec2.forEach((vecB, iB) => {
+    let key = veclen(vecB[0]);
+    let value = Btable.get(key) || [];
+    value.push(iB);
+    Btable.set(key, value);
+  });
   vec1.forEach((vecA, iA) => {
-    vec2.forEach((vecB, iB) => {
-      if (veclen(vecA[0]) === veclen(vecB[0])) {
-        potentialMatches.push([iA, iB]);
-      }
-    });
+    let vlA = veclen(vecA[0]);
+    let eqvs = Btable.get(vlA);
+    if (eqvs && eqvs.length) {
+      eqvs.forEach((evv) => potentialMatches.push([iA, evv]));
+    }
   });
   if (potentialMatches.length < MIN_MATCHES) {
     //dbg(potentialMatches.length, "distance mathces");
@@ -325,7 +332,7 @@ function match(scanner1: number[][], scanner2: number[][]) {
   let rs = result.length;
   dbg(rs - s1s - s2s, "overlap");
   dbg([s1s, s2s, rs], "result size");
-  return result;
+  return [result, translate[0]];
 }
 
 //dbg(scanners);
@@ -341,7 +348,7 @@ function match(scanner1: number[][], scanner2: number[][]) {
 });
 dbg(bmap.length);*/
 let clouds = Object.keys(scanners).map((sn) => scanners[sn]);
-while (clouds.length > 1) {
+/*while (clouds.length > 1) {
   dbg(clouds.length, "CLOUDS LEFT");
   let cl = clouds[0];
   let rest = clouds.slice(1);
@@ -357,15 +364,44 @@ while (clouds.length > 1) {
     }
   }
   if (merged) {
-    clouds = dbg([...rest], "MERGED");
+    ///clouds = dbg([...rest], "MERGED");
+    clouds = [...rest];
   } else {
     clouds = [...rest, cl];
     //dbg(clouds);
     //dbg(clouds.length);
     dbg(_.sum(clouds.map((cm) => cm.length)));
   }
+}*/
+let mergeResult = clouds[0];
+let rest = clouds.slice(1);
+let centers = [[0, 0, 0]];
+while (rest.length) {
+  rest = rest.filter((rcloud) => {
+    try {
+      let [result, translate] = match(
+        _.cloneDeep(mergeResult),
+        _.cloneDeep(rcloud)
+      );
+      centers.push(translate);
+      mergeResult = result;
+      return false;
+    } catch (_) {
+      return true;
+    }
+  });
 }
-answer(1, clouds[0].length);
+answer(1, mergeResult.length);
+let mhd = (cv) => Math.abs(cv[0]) + Math.abs(cv[1]) + Math.abs(cv[2]);
+let max = 0;
+dbg(centers);
+centers.forEach((c1) => {
+  centers.forEach((c2) => {
+    let dist = mhd(dif(c1, c2));
+    max = Math.max(max, dist);
+  });
+});
+answer(2, max);
 /*Object.keys(scanners).forEach((ks1, id1) => {
   Object.keys(scanners).forEach((ks2, id2) => {
     if (id2 <= id1) return;
