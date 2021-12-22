@@ -1,6 +1,10 @@
 {
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "lib": ["ES2020"],
+        "module": "nodenext",
+        "moduleResolution": "node",
+        "target": "esnext"
     },
 }
