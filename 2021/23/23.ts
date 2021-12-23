@@ -86,20 +86,26 @@ let ROOM = [2, 3];
 let ENERGY_ = [1, 10, 100, 1000];
 let ENERGY = {};
 _.zip(LETTERS, ENERGY_).forEach(([lett, eng]) => (ENERGY[lett] = eng));
+DEBUG = false;
 function canPlace(state: State, cpos: number[]) {
   //dbg("CAN PLACE");
   let amp = _.get(state.position, cpos, ".");
   let dest = DEST[amp];
   let energy = ENERGY[amp];
-  let pl1 = state.position[ROOM[0]][dest] === ".";
-  let pl2 = state.position[ROOM[1]][dest];
+  let room = ROOM.map((rr) => state.position[rr][dest]);
   let drow = -1;
-  if (pl2 === ".") {
-    drow = ROOM[1];
-  } else if (pl2 === amp && pl1) {
-    drow = ROOM[0];
+  //dbg(pps(state), amp);
+  for (let i = room.length - 1; i >= 0; --i) {
+    if (room[i] !== "." && room[i] !== amp) {
+      break;
+    }
+    if (room[i] === ".") {
+      drow = ROOM[i];
+      break;
+    }
   }
   if (drow === -1) return -1;
+  //dbg([room, ROOM, drow]);
   let pathFree = true;
   let diff = Math.sign(cpos[1] - dest);
   //dbg([dest, cpos[1], diff]);
@@ -111,22 +117,26 @@ function canPlace(state: State, cpos: number[]) {
   if (!pathFree) {
     return -1;
   }
-  let moveDown = drow === ROOM[1];
-  let pathEnergy = Math.abs(dest - cpos[1]) + (moveDown ? 2 : 1);
+  let pathEnergy = Math.abs(dest - cpos[1]) + (drow - HALLWAY);
   return pathEnergy * energy;
 }
+
 function putInPlace(state: State, cpos: number[]) {
   let amp = _.get(state.position, cpos, ".");
   let dest = DEST[amp];
-  let energy = ENERGY[amp];
-  let placement = state.position[ROOM[0]][dest] === ".";
-  let moveDown = state.position[ROOM[1]][dest] === ".";
-  _.set(state.position, cpos, ".");
-  if (moveDown) {
-    _.set(state.position, [ROOM[1], dest], amp);
-  } else {
-    _.set(state.position, [ROOM[0], dest], amp);
+  let room = ROOM.map((rr) => state.position[rr][dest]);
+  let drow = -1;
+  for (let i = room.length - 1; i >= 0; --i) {
+    if (room[i] !== "." && room[i] !== amp) {
+      break;
+    }
+    if (room[i] === ".") {
+      drow = ROOM[i];
+      break;
+    }
   }
+  _.set(state.position, cpos, ".");
+  _.set(state.position, [drow, dest], amp);
 }
 function putInHallway(state: State, cpos: number[], target: number) {
   let amp = _.get(state.position, cpos, ".");
@@ -137,14 +147,20 @@ function moveAway(state: State, cpos: number[]) {
   let amp = _.get(state.position, cpos, ".");
   let dest = DEST[amp];
   //dbg([amp, dest, cpos[1]], "MOVE AWAY");
-  let finish =
-    cpos[1] === dest &&
-    (cpos[0] === ROOM[1] || _.get(state.position, [ROOM[1], dest]) === amp);
+  let positioned = cpos[1] === dest;
+  let finish = positioned;
+  for (let i = HALLWAY + 1; state.position[i][cpos[1]] !== "#"; ++i) {
+    let pv = state.position[i][cpos[1]];
+    if (i < cpos[0]) {
+      if (pv !== ".") return []; //path blocked
+    }
+    if (i > cpos[0]) {
+      finish = finish && pv === amp;
+    }
+  }
   if (finish) return [];
-  if (cpos[0] === ROOM[1] && _.get(state.position, [ROOM[0], cpos[1]]) !== ".")
-    return [];
   let energy = ENERGY[amp];
-  let baseEnergy = cpos[0] === ROOM[1] ? energy * 2 : energy;
+  let baseEnergy = (cpos[0] - HALLWAY) * energy;
   let result = [];
   function tryMove(range: number) {
     let hpos = cpos[1] + range;
@@ -170,6 +186,7 @@ function moveAway(state: State, cpos: number[]) {
 }
 function pe(pos: State) {
   let pe = 0;
+  let pev = new HM<number[], number>();
   pos.position.forEach((prow, pidx) => {
     if (pidx === HALLWAY) {
       prow.forEach((pcell, cidx) => {
@@ -185,7 +202,7 @@ function pe(pos: State) {
           let dest = DEST[pcell];
           let energy = ENERGY[pcell];
           if (dest !== cidx) {
-            pe += (Math.abs(dest - cidx) + 2) * energy;
+            pe += (Math.abs(dest - cidx) + 1) * energy;
           }
         }
       });
@@ -239,33 +256,39 @@ function equals(st1: string[][], st2: string[][]) {
   return sv1 === sv2;
 }
 
-function bfs() {
+function bfs(initialMap, targetMap, part) {
   let open = new PQ<State>({
     comparator: (st1, st2) => st1.energy + st1.pe - (st2.energy + st2.pe),
   });
-  let closed = new HM<string[][], number>();
-  let initial: State = { position: contents, energy: 0 };
+  let reached = new HM<string[][], number>();
+  let initial: State = { position: initialMap, energy: 0 };
   initial.pe = pe(initial);
   open.queue(initial);
   while (open.length > 0) {
     let spos = open.dequeue();
-    if (closed.has(spos.position)) {
-      let oev = closed.get(spos.position);
-      if (oev < spos.energy) {
-        continue;
-      }
-    }
     //dbg(spos);
-    if (equals(spos.position, targets)) {
+    if (equals(spos.position, targetMap)) {
       dbg(spos);
+      answer(part, spos.energy);
       return;
     }
-    closed.set(spos.position, spos.energy);
+    reached.set(spos.position, spos.energy);
     //dbg(pps(spos));
-    dbg(spos.energy);
+    //dbg(spos.energy);
     //dbg(open.length);
     let exp = expandPosition(spos);
-    exp.forEach((sp) => open.queue(sp));
+    exp.forEach((sp) => {
+      if (reached.has(sp.position)) {
+        let oev = reached.get(sp.position);
+        if (oev > sp.energy) {
+          open.queue(sp);
+          reached.set(sp.position, sp.energy);
+        }
+      } else {
+        open.queue(sp);
+        reached.set(sp.position, sp.energy);
+      }
+    });
   }
   dbg("OUT");
 }
@@ -280,4 +303,31 @@ function pps(state: State) {
 
 dbg(prettyPrint(contents));
 //dbg(prettyPrint(targets));
-bfs();
+bfs(contents, targets, 1);
+
+ROOM = [2, 3, 4, 5];
+
+target = `
+#############
+#...........#
+###A#B#C#D###
+  #A#B#C#D#
+  #A#B#C#D#  
+  #A#B#C#D#
+  #########`;
+
+let insertion = `
+  #D#C#B#A#
+  #D#B#A#C#
+`
+  .split("\n")
+  .filter((s) => s.length > 0)
+  .map((s) => s.split(""));
+var targets = target
+  .split("\n")
+  //.map((s) => s.trim())
+  .filter((s) => s.length > 0)
+  .map((s) => s.split(""));
+
+contents = [...contents.slice(0, 3), ...insertion, ...contents.slice(3)];
+bfs(contents, targets, 2);
