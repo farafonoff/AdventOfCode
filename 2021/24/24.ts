@@ -254,10 +254,6 @@ let opti = optimize(contents);
 let compiled = incodeToJs(contents);
 let optic = incodeToJs(opti);
 let handop = new Function("data", handopt);
-
-//dbg(intToCPP(contents));
-//dbg(compiled([7]));
-//dbg(optic([7]));
 let answers = [];
 function brnumber(head: number[]) {
   if (head.length > 0) {
@@ -267,25 +263,11 @@ function brnumber(head: number[]) {
     }
   }
   if (head.length === 14) {
-    //    dbg(head);
-    //let phead = [...head].reverse();
     let phead = [...head];
     let valid = !_.some(phead, (v) => v < 0 || v > 9);
     if (!valid) {
       throw phead.join("");
     }
-    //dbg(phead);
-    //let str = compiled([...phead]);
-    /*dbg(phead);
-    let str0 = compiled([...phead]);
-    let str1 = optic([...phead]);
-    let str2 = handop([...phead]);
-    dbg([str1, str2, str0]);
-    if (str0["z"] === 0) {
-      dbg(head);
-      answer(1, phead.join(""));
-      //throw phead.join("");
-    }*/
     answers.push(phead.join(""));
     return;
   }
@@ -297,55 +279,6 @@ function brnumber(head: number[]) {
     head.splice(head.length - 1, 1);
     return;
   }
-  /*if (head.length === 4) {
-    let d = head[3] - 8;
-    head.push(d);
-    brnumber(head);
-    head.splice(head.length - 1, 1);
-    return;
-  }
-  if (head.length === 6) {
-    let d = head[5] - 4;
-    head.push(d);
-    brnumber(head);
-    head.splice(head.length - 1, 1);
-    return;
-  }
-  if (head.length === 9) {
-    let d = head[8];
-    head.push(d);
-    brnumber(head);
-    head.splice(head.length - 1, 1);
-    return;
-  }
-  if (head.length === 11) {
-    let d = head[10] + 2;
-    head.push(d);
-    brnumber(head);
-    head.splice(head.length - 1, 1);
-    return;
-  }
-  if (head.length === 7) {
-    let d = head[2] + 5;
-    head.push(d);
-    brnumber(head);
-    head.splice(head.length - 1, 1);
-    return;
-  }
-  if (head.length === 12) {
-    let d = head[1] + 1;
-    head.push(d);
-    brnumber(head);
-    head.splice(head.length - 1, 1);
-    return;
-  }
-  if (head.length === 13) {
-    let d = head[0] - 5;
-    head.push(d);
-    brnumber(head);
-    head.splice(head.length - 1, 1);
-    return;
-  }*/
   for (let d = 9; d >= 0; --d) {
     head.push(d);
     brnumber(head);
