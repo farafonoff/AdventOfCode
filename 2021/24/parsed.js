@@ -1,3 +1,4 @@
+// OPTIMIZED BY HAND!!!
 let DEBUG = false;
 let w = 0;
 let x = 0;
