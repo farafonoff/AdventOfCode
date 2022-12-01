@@ -7,7 +7,7 @@ const infile = process.argv[2] || "input";
 
 function trnum(val: string): number | string {
   let nn = Number(val);
-  if (isFinite(nn)) {
+  if (val !== "" && isFinite(nn)) {
     return nn;
   }
   return val;
@@ -52,18 +52,18 @@ var contents = fs
   .readFileSync(infile, "utf8")
   .split("\n")
   .map((s) => s.trim())
-  .map((s) => Number(s));
+  .map((s) => trnum(s));
 //.filter((s) => s.length > 0);
 //var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
 let elves = [];
 let ev = 0;
 contents.forEach((line) => {
-  if (line === 0) {
+  if (line === "") {
     elves.push(ev);
     ev = 0;
   } else {
-    ev += line;
+    ev += Number(line);
   }
 });
 elves.push(ev);
