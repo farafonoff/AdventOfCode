@@ -72,21 +72,17 @@ contents.forEach((line) => {
     }
   }
 });
-/*
+let ocratez = _.cloneDeep(cratez);
 movz.forEach((mm) => {
   for (let mi = 0; mi < mm[1]; ++mi) {
     let mc = cratez[mm[3] - 1].splice(0, 1);
     cratez[mm[5] - 1] = [...mc, ...cratez[mm[5] - 1]];
   }
-  dbg(cratez);
 });
-dbg(cratez);
 answer(1, cratez.map((cz) => cz[0]).join(""));
-*/
+cratez = _.cloneDeep(ocratez);
 movz.forEach((mm) => {
   let mc = cratez[mm[3] - 1].splice(0, mm[1]);
   cratez[mm[5] - 1] = [...mc, ...cratez[mm[5] - 1]];
-  dbg(cratez);
 });
-dbg(cratez);
-answer(1, cratez.map((cz) => cz[0]).join(""));
+answer(2, cratez.map((cz) => cz[0]).join(""));
