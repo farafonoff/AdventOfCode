@@ -74,7 +74,7 @@ let solve = (part) => {
         answer(part, i + bs);
         break;
       }
-    }
+    } 
   });
 };
 
