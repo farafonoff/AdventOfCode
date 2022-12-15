@@ -212,11 +212,21 @@ function sv2(y, contents) {
 answer(1, sv1(10, contents));
 answer(1, sv1(11, contents));*/
 DEBUG = false;
-answer(1, sv1(2000000, contents));
-for (let yv = 0; yv <= 4000000; ++yv) {
-  let holes = sv2(yv, contents);
-  if (holes.length) {
-    answer(2, holes[0] * 4000000 + yv);
+if (infile === "input.test") {
+  answer(1, sv1(10, contents));
+  for (let yv = 0; yv <= 20; ++yv) {
+    let holes = sv2(yv, contents);
+    if (holes.length) {
+      answer(2, holes[0] * 4000000 + yv);
+    }
+  }
+} else {
+  answer(1, sv1(2000000, contents));
+  for (let yv = 0; yv <= 4000000; ++yv) {
+    let holes = sv2(yv, contents);
+    if (holes.length) {
+      answer(2, holes[0] * 4000000 + yv);
+    }
   }
 }
 
