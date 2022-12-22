@@ -130,13 +130,6 @@ function solve1(map, initial, idir, route) {
   answer(1, answer1);
 }
 
-function rot(sd, ed, pos) {
-  while (sd != ed) {
-    sd += 1;
-    sd = sd % 4;
-  }
-}
-
 function solve2(map, initial, idir, route, SS = 50) {
   let mdbg = () => {
     map.forEach((row) => {
@@ -154,21 +147,22 @@ function solve2(map, initial, idir, route, SS = 50) {
     [2 * SS, 0],
     [3 * SS, 0],
   ];
+  const ER = SS - 1;
   let wrmap = [
-    [0, 0, 3, 2],
-    [0, 1, 2, 2],
-    [0, 3, 5, 3],
-    [1, 3, 5, 0],
-    [1, 2, 4, 0],
-    [2, 0, 0, 3],
-    [2, 2, 4, 1],
-    [3, 0, 0, 2],
-    [3, 1, 5, 2],
-    [4, 3, 2, 0],
-    [4, 2, 1, 0],
-    [5, 0, 3, 3],
-    [5, 1, 0, 1],
-    [5, 2, 1, 1],
+    [0, 0, 3, 2, ([r, c]) => [ER - r, ER]],
+    [0, 1, 2, 2, ([r, c]) => [c, ER]],
+    [0, 3, 5, 3, ([r, c]) => [ER, c]],
+    [1, 3, 5, 0, ([r, c]) => [c, 0]],
+    [1, 2, 4, 0, ([r, c]) => [ER - r, 0]],
+    [2, 0, 0, 3, ([r, c]) => [ER, r]],
+    [2, 2, 4, 1, ([r, c]) => [0, r]],
+    [3, 0, 0, 2, ([r, c]) => [ER - r, ER]],
+    [3, 1, 5, 2, ([r, c]) => [c, ER]],
+    [4, 3, 2, 0, ([r, c]) => [c, 0]],
+    [4, 2, 1, 0, ([r, c]) => [ER - r, 0]],
+    [5, 0, 3, 3, ([r, c]) => [ER, r]],
+    [5, 1, 0, 1, ([r, c]) => [0, c]],
+    [5, 2, 1, 1, ([r, c]) => [0, r]],
   ];
   function mySegment(pos) {
     let res;
@@ -185,12 +179,20 @@ function solve2(map, initial, idir, route, SS = 50) {
       let next = vadd(pos, directions[dir].ve);
       let nch = _.get(map, next, " ") as string;
       if (nch === " ") {
-        dbg([pos, dir], "WRAP");
         ///wrap
         let seg = mySegment(pos);
         let nextSeg = wrmap.find((row) => row[0] === seg[0] && row[1] === dir);
-        dbg([seg, nextSeg]);
-        return;
+        let ns = nextSeg[2] as number;
+        let nextDir = nextSeg[3];
+        let segPos = [seg[1], seg[2]];
+        let nextSegPos = (nextSeg[4] as any)(segPos);
+        //let nextPos = rot(dir, nextDir, segPos, SS);
+        dbg([pos, seg[0], segPos, dir, ns, nextSegPos, nextDir]);
+        next = vadd(nextSegPos, segments[ns]);
+        nch = _.get(map, next, " ") as string;
+        if (nch !== "#") {
+          dir = nextDir;
+        }
       }
       nch = _.get(map, next, " ") as string;
       if (nch === "#") {
@@ -234,5 +236,5 @@ function solve2(map, initial, idir, route, SS = 50) {
 
 DEBUG = false;
 solve1(_.cloneDeep(map), [...initial], 0, route);
-DEBUG = true;
+DEBUG = false;
 solve2(_.cloneDeep(map), [...initial], 0, route);
