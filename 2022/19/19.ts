@@ -96,7 +96,7 @@ function dfs(blueprint, cutoff, robots, materials, time) {
     return;
   }
   MATERIALS.forEach((robot) => {
-    if (robots[robot] > cutoff[robot]) {
+    if (robots[robot] >= cutoff[robot]) {
       return;
     }
     let deltas = MATERIALS.map((mat) => blueprint[robot][mat] - materials[mat]);
