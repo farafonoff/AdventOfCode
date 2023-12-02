@@ -30,7 +30,7 @@ function incHM(tab: HM<unknown, number>, key: unknown, inc: number, dv = 0) {
   let ov = tab.get(key) || dv;
   tab.set(key, ov + inc);
 }
-let DEBUG = false;
+let DEBUG = true;
 
 function dbg(expression: any, message: string = ""): any {
   if (!DEBUG) {
@@ -55,32 +55,47 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
-let a1 = 0;
+const games = [];
 contents.forEach((line) => {
-  let digs = line.split('').map(Number).filter(ch => isFinite(ch))
-  let dd = digs[0]*10 + digs[digs.length - 1];
-  a1 += dd;
+  const [header, body] = line.split(': ')
+  const [_, gameId] = header.split(' ')
+  const gamesList = body.split('; ').map(game => game.split(', ').map(gc => gc.split(' ').map(trnum)));
+  games.push([gameId, gamesList]);
 });
-answer(1, a1)
-const sdigits = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-const ddigits = [];
-for(let i=0;i<10;++i) ddigits.push(String(i));
-let a2 = 0;
-contents.forEach((line) => {
-  let fd = Infinity;
-  let ld = -1;
-  let n1, n2;
-  for(let i=0;i<10;++i) {
-    let di = line.indexOf(sdigits[i]);
-    let si = line.indexOf(ddigits[i]);
-    if (di < fd && di !== -1) { n1 = i; fd = di; }
-    if (si < fd && si !== -1) { n1 = i; fd = si; }
-    let ldi = line.lastIndexOf(sdigits[i]);
-    let lsi = line.lastIndexOf(ddigits[i]);
-    if (ldi > ld) { n2 = i; ld = ldi; }
-    if (lsi > ld) { n2 = i; ld = lsi; }
+
+let p1 = {
+  'red': 12,
+  'green': 13,
+  'blue': 14
+}
+let matching = games.filter(([gameId, gameList]) => {
+  let possible = true;
+  gameList.forEach(game => {
+    game.forEach(([count, color]) => {
+      if (count > p1[color]) {
+        possible = false;
+      }
+    });
+  })
+  return possible
+});
+
+let ans1 = 0;
+matching.forEach(([id, gl]) => ans1 += Number(id))
+answer(1, ans1)
+
+let powers = games.map(([gameId, gameList]) => {
+  let pw = {
+    'red': 0,
+    'green': 0,
+    'blue': 0
   }
-  dbg([line, n1, n2])
-  a2 += 10*n1 + n2;
+  gameList.forEach(game => {
+    game.forEach(([count, color]) => {
+      pw[color] = Math.max(count, pw[color])
+    });
+  })
+  return pw.red * pw.green * pw.blue
 })
-answer(2, a2)
+let ans2 = powers.reduce((a,b) => a+b)
+answer(2, ans2)
