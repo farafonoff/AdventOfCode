@@ -5,6 +5,7 @@
   "main": "puzzle01.js",
   "dependencies": {
     "big-integer": "^1.6.48",
+    "cross-env": "^7.0.3",
     "hashmap": "^2.4.0",
     "js-big-decimal": "^1.3.13",
     "js-md5": "^0.4.1",
@@ -15,8 +16,8 @@
     "typescript": "^4.9.3"
   },
   "scripts": {
-    "start": "cd ${npm_config_day}; ts-node ${npm_config_day} input",
-    "test": "cd ${npm_config_day}; ts-node ${npm_config_day} input.test",
+    "start": "cd ${npm_config_day}; cross-env NODE_OPTIONS='-r ts-node/register' node --stack-size=32000 ${npm_config_day} input",
+    "test": "cd ${npm_config_day}; cross-env NODE_OPTIONS='-r ts-node/register' node --stack-size=32000 ${npm_config_day} input.test",
     "prepareday": "mkdir -p ${npm_config_day}; cp template.ts ${npm_config_day}/${npm_config_day}.ts; touch ${npm_config_day}/input;touch ${npm_config_day}/input.test; npm config set day ${npm_config_day} --userconfig ./.npmrc",
     "commitday": "git add ${npm_config_day}/*;git add .npmrc;git commit -m \"init day ${npm_config_day}\"",
     "init": "npm run prepareday --day=${npm_config_day};npm run commitday --day=${npm_config_day}",
