@@ -5,6 +5,20 @@ import PQ from "js-priority-queue";
 import _ from "lodash";
 const infile = process.argv[2] || "input";
 
+function cached<T extends Function>(fn: T): T {
+  const cache = new HM();
+  function inner() {
+    let key = [...arguments];
+    if (cache.has(key)) {
+      return cache.get(key)
+    }
+    let res = fn(...arguments)
+    cache.set(key, res)
+    return res;
+  }
+  return inner as any;
+}
+
 function trnum(val: string): number | string {
   let nn = Number(val);
   if (val !== "" && isFinite(nn)) {
