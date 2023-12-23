@@ -40,6 +40,12 @@ function decimalToHex(d, padding) {
   return hex;
 }
 
+const up = ([a,b]) => [a-1, b];
+const down = ([a,b]) => [a+1, b];
+const left = ([a,b]) => [a, b-1];
+const right = ([a,b]) => [a, b+1];
+const dirs = [up, down, left, right]
+
 function incHM(tab: HM<unknown, number>, key: unknown, inc: number, dv = 0) {
   let ov = tab.get(key) || dv;
   tab.set(key, ov + inc);
