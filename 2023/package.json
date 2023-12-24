@@ -14,7 +14,8 @@
     "paralleljs": "^1.1.0",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.1",
-    "typescript": "^4.9.3"
+    "typescript": "^5.3.3",
+    "z3-solver": "^4.12.4"
   },
   "scripts": {
     "start": "cd ${npm_config_day}; cross-env NODE_OPTIONS='-r ts-node/register' node --stack-size=32000 ${npm_config_day} input",
