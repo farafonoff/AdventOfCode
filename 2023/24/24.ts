@@ -4,6 +4,7 @@ import bigDecimal from "js-big-decimal";
 import md5 from "js-md5";
 import PQ from "js-priority-queue";
 import _, { isArray } from "lodash";
+import { exit } from "process";
 
 import { init } from 'z3-solver';
 
@@ -322,4 +323,8 @@ z3init().then(async ({ Z3, Context}) => {
   const res = await solver.check()
   console.log(res)
   console.log((solver.model().eval(x.add(y).add(z)) as any).value())
+  console.log((solver.model().eval(vx) as any).value())
+  console.log((solver.model().eval(vy) as any).value())
+  console.log((solver.model().eval(vz) as any).value())
+  exit(0)
 } )
