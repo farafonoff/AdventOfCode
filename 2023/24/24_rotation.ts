@@ -430,10 +430,11 @@ function rotateVector(vector: Vector3, rotationMatrix: number[][]): Vector3 {
   return rotatedVector;
 }
 DEBUG = false
+const eps = 0.00001
 function solveBruteforce() {
-  for (let vx = 0; vx <= 50; ++vx) {
-    for (let vy = -300; vy <= -250; ++vy) {
-      for (let vz = 100; vz <= 150; ++vz) {
+  for (let vx = -10; vx <= 10; ++vx) {
+    for (let vy = -10; vy <= 10; ++vy) {
+      for (let vz = -10; vz <= 10; ++vz) {
       /*const vx = 28
       const vy = -286
       const vz = 123*/
@@ -452,14 +453,14 @@ function solveBruteforce() {
           [[rotated[2][0].x, rotated[2][0].y], [rotated[2][1].x, rotated[2][1].y]],
           [[rotated[3][0].x, rotated[3][0].y], [rotated[3][1].x, rotated[3][1].y]],
         );
-        const intersection3 = getIntersectionPoint(
+        /*const intersection3 = getIntersectionPoint(
           [[rotated[4][0].x, rotated[4][0].y], [rotated[4][1].x, rotated[4][1].y]],
           [[rotated[5][0].x, rotated[5][0].y], [rotated[5][1].x, rotated[5][1].y]],
-        );
+        );*/
         if (intersection1 && intersection2) {
-          if (Math.abs(intersection1[0] - intersection2[0]) < 100000 && Math.abs(intersection1[1] - intersection2[1]) < 100000 ) {
-            console.log([intersection1, intersection2, intersection3], 'INTERSECTIONS MATCH?')
-            //console.log([vx, vy, vz]);
+          if (Math.abs(intersection1[0] - intersection2[0]) < eps && Math.abs(intersection1[1] - intersection2[1]) < eps ) {
+            console.log([intersection1, intersection2], 'INTERSECTIONS MATCH?')
+            console.log([vx, vy, vz]);
           }
         }
       }
