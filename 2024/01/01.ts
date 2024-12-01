@@ -68,13 +68,38 @@ function answer(part, value) {
   console.log(`Answer ${part}: ${value}`);
 }
 
-var contents = fs
+/*var contents = fs
   .readFileSync(infile, "utf8")
   .split("\n")
   .map((s) => s.trim())
-  .filter((s) => s.length > 0);
-//var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
+  .filter((s) => s.length > 0);*/
+var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/\s+/).map(Number));
 //var contents = fs.readFileSync('input', 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
+const lists = [[],[]];
+console.log("contents", contents);
 contents.forEach((line) => {
-  console.log(line);
+  line.forEach((val, idx) => {
+    lists[idx].push(val);
+  });
 });
+
+console.log("lists", lists);
+
+let [p1, p2] = lists;
+
+p1.sort((a,b) => a-b);
+p2.sort((a,b) => a-b);
+
+let pdiff = 0;
+p1.forEach((val, idx) => {
+  pdiff += Math.abs(val - p2[idx]);
+});
+
+answer(1, pdiff);
+
+let simscore = 0;
+p1.forEach((val, idx) => {
+  simscore += val * p2.filter((v) => v === val).length;
+});
+
+answer(2, simscore);
