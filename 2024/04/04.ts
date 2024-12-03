@@ -50,7 +50,7 @@ function incHM(tab: HM<unknown, number>, key: unknown, inc: number, dv = 0) {
   let ov = tab.get(key) || dv;
   tab.set(key, ov + inc);
 }
-let DEBUG = false;
+let DEBUG = true;
 
 function dbg(expression: any, message: string = ""): any {
   if (!DEBUG) {
@@ -75,34 +75,6 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
-let ans1 = 0;
 contents.forEach((line) => {
-  const matches = line.matchAll(/mul\((\d+),(\d+)\)/g);
-  const muls = [...matches].map(m => [m[0], trnum(m[1]), trnum(m[2]), Number(m[1]) * Number(m[2])]);
-  muls.forEach(([orig, a, b, res]) => {
-    ans1 += Number(res);
-  });
+  console.log(line);
 });
-
-answer(1, ans1);
-
-let ans2 = 0;
-let enabled = true;
-contents.forEach((line) => {
-  const matches = line.matchAll(/mul\((\d+),(\d+)\)|do\(\)|don't\(\)/g);
-  const muls = [...matches].map(m => [m[0], trnum(m[1]), trnum(m[2]), Number(m[1]) * Number(m[2])]);
-  dbg(muls);
-  muls.forEach(([orig, a, b, res]) => {
-    if (orig === "do()") {
-      enabled = true;
-    }
-    if (orig === "don't()") {
-      enabled = false;
-    }
-    if (enabled && String(orig).startsWith("mul")) {
-      ans2 += Number(res);
-    }
-  });
-});
-
-answer(2, ans2);
