@@ -68,8 +68,6 @@ function answer(part, value) {
   console.log(`Answer ${part}: ${value}`);
 }
 
-let wordsearch = [];
-
 var contents = fs
   .readFileSync(infile, "utf8")
   .split("\n")
@@ -78,73 +76,5 @@ var contents = fs
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
 contents.forEach((line) => {
-  const chars = line.split('');
-  wordsearch.push(chars);
+  console.log(line);
 });
-
-const xes = [];
-const aes = [];
-wordsearch.forEach((line, row) => {
-  line.forEach((c, col) => {
-    if (c === 'X') {
-      xes.push([row, col]);    
-    }
-    if (c === 'A') {
-      aes.push([row, col]);
-    }    
-  });
-});
-
-const dvs = [
-  [1, 0],
-  [0, 1],
-  [1, 1],
-  [-1, 0],
-  [0, -1],
-  [-1, -1],
-  [1, -1],
-  [-1, 1],
-];
-
-let count = 0;
-const word = "XMAS";
-xes.forEach(([row, col]) => {
-  dvs.forEach(([dr, dc]) => {
-    let chars = [];
-    for(let i=0;i<word.length;i++) {
-      chars.push(wordsearch[row + dr * i]?.[col + dc * i]);
-    }
-    chars.join('');
-    if (chars.join('') === word) {
-      ++count;
-    }
-  });
-});
-
-answer(1, count);
-
-let count1 = 0;
-const word1 = "MAS";
-const diagonals = [
-  [-1, -1],
-  [-1, 1],
-]
-aes.forEach(([row, col]) => {
-  let matches = 0;
-  diagonals.forEach(([dr, dc]) => {
-    let chars = [];
-    for(let i=-1;i<2;++i) {
-      chars.push(wordsearch[row + dr * i]?.[col + dc * i]);
-    }
-    const word = chars.join('');
-    const rword = chars.reverse().join('');
-    if (word === word1 || rword === word1) {
-      ++matches;
-    }
-  });
-  if (matches === 2) {
-    ++count1;
-  }
-});
-
-answer(2, count1);
