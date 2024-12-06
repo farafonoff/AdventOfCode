@@ -64,6 +64,11 @@ function dbg(expression: any, message: string = ""): any {
   return expression;
 }
 
+function dbgMat(map) {
+  console.log(map.map((row) => row.join('')).join('\n'));
+  console.log('====================');
+}
+
 function answer(part, value) {
   console.log(`Answer ${part}: ${value}`);
 }
@@ -75,6 +80,112 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
+const map = [];
+let guard = [];
+const pos = [];
+let vec = [];
 contents.forEach((line) => {
-  console.log(line);
+  map.push(line.split(""));
+  if (line.indexOf('^') >= 0) {
+    guard = [map.length-1, line.indexOf('^')];
+    vec =[-1, 0];
+  }
 });
+
+_.set(map, guard, 'X');
+const rotR = [[0, 1], [-1, 0]];
+
+const mulVecMat = (vec, mat) => {
+  return [vec[0]*mat[0][0] + vec[1]*mat[0][1], vec[0]*mat[1][0] + vec[1]*mat[1][1]];
+}
+
+function getAns1(map) {
+  return map
+  .map(row => row.filter((ch) => ch === 'X' || ch === '^').length)
+  .reduce((acc, row) => {
+    return acc + row;
+  });
+}
+
+const vecAdd = (a, b) => [a[0]+b[0], a[1]+b[1]];
+
+dbg(mulVecMat([-1, 0], rotR));
+dbg(mulVecMat([0, 1], rotR));
+dbg(mulVecMat([1, 0], rotR));
+dbg(mulVecMat([0, -1], rotR));
+
+class LoopError extends Error {
+  mat: any;
+  constructor(mat: any) {
+    super("Loop detected");
+    this.mat = mat;
+  }
+}
+
+function solve(map, guard, vec) {
+  const visited = new HM();
+  visited.set([...guard, ...vec], 1);
+  do {
+    const nextGuard = vecAdd(guard, vec);
+    const posKey = [...nextGuard, ...vec];
+    if (visited.has(posKey)) {
+      throw new LoopError(map);
+    }
+    visited.set(posKey, 1);
+    const ch = _.get(map, nextGuard);
+    if (ch === undefined) {
+      break;
+    }
+    if (ch === '#' || ch === 'O') {
+      vec = mulVecMat(vec, rotR);
+    }
+    if (ch === '.' || ch === 'X' || ch === '^') {
+      _.set(map, nextGuard, 'X');
+      guard = nextGuard;
+      pos.push([...guard]);
+    }
+    //dbgMat(map);
+  } while (true);
+  return map;
+}
+
+const part1 = solve(_.cloneDeep(map), guard, vec);
+dbgMat(part1);
+answer(1, getAns1(part1));
+
+let candidates = [];
+for(let i=0;i<part1.length;i++) {
+  for(let j=0;j<part1[i].length;j++) {
+    if (part1[i][j] === '#') {
+      continue;
+    }
+    const around = dirs.map(df => df([i,j]));
+    const arch = around.map(([a,b]) => _.get(part1, [a,b]));
+    console.log([i,j], part1[i][j], arch);
+    let hasX = arch.filter(ch => ch === 'X').length > 0;
+    if (hasX) {
+      candidates.push([i,j]);
+    }
+  }
+}
+
+dbgMat(part1);
+dbgMat(map);
+
+dbg(candidates);
+let loops = 0;
+candidates.forEach(([i,j]) => {
+  const loopMat = _.cloneDeep(map);
+  _.set(loopMat, [i,j], 'O');
+  try {
+    solve(loopMat, guard, vec);
+  } catch(e) {
+    if (e instanceof LoopError) {
+      ++loops;
+      dbgMat(e.mat);
+      dbg([i,j], 'LOOP');
+    }
+  }
+});
+
+answer(2, loops);
