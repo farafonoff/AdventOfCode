@@ -159,11 +159,7 @@ for(let i=0;i<part1.length;i++) {
     if (part1[i][j] === '#') {
       continue;
     }
-    const around = dirs.map(df => df([i,j]));
-    const arch = around.map(([a,b]) => _.get(part1, [a,b]));
-    console.log([i,j], part1[i][j], arch);
-    let hasX = arch.filter(ch => ch === 'X').length > 0;
-    if (hasX) {
+    if (part1[i][j] === 'X') {
       candidates.push([i,j]);
     }
   }
