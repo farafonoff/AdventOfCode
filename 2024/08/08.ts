@@ -75,6 +75,116 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
-contents.forEach((line) => {
-  console.log(line);
+let map = [];
+let alphabet = new Set<string>();
+let antennas = new Map<string, number[][]>();
+contents.forEach((line, li) => {
+  const ll = line.split('');
+  map.push(ll);
+  ll.forEach((c, ci) => {
+    if (c!== '.') {
+      alphabet.add(c)
+      const oldAnt = antennas.get(c) || [];
+      antennas.set(c, [...oldAnt, [li, ci]])
+    }
+  });
 });
+
+DEBUG = false;
+
+dbg(alphabet)
+
+dbg(antennas);
+
+let antinodes = new HM<number[],string[]>();
+
+alphabet.forEach((freq) => {
+  let antenz = antennas.get(freq);
+  dbg(antenz);
+  for(let i=0;i<antenz.length;i++) {
+    for(let j=0;j<antenz.length;j++) {
+      if (i === j) {
+        continue;
+      }
+      let [a, b] = antenz[i];
+      let [c, d] = antenz[j];
+      let vec = [c-a, d-b];
+      let antinode = [a-vec[0], b-vec[1]];
+      if (antinode[0] < 0 || antinode[1] < 0 || antinode[0] >= map.length || antinode[1] >= map[0].length) {
+      } else {
+        dbg(antinode);
+        dbg(freq);
+        let antnz = antinodes.get(antinode) || [];
+        antinodes.set(antinode, [...antnz, freq]);
+      }
+    }
+  }
+});
+
+function dbgAntinodes(antinodes) {
+  let nm = [];
+  for (let i = 0; i < map.length; i++) {
+    let row = [];
+    for (let j = 0; j < map[0].length; j++) {
+      let an = ['#']// antinodes.get([i, j]);
+      if (antinodes.get([i, j])) {
+        row.push(an.join(''));
+      } else {
+        row.push('.');
+      }
+    }
+    nm.push(row);
+  }
+  return nm;
+}
+
+function dbgMap(map) {
+  map.forEach((row) => {
+    console.log(row.join(''));
+  });
+}
+
+//dbgMap(dbgAntinodes(antinodes));
+
+answer(1, antinodes.count());
+
+DEBUG = false;
+let antinodes2 = new HM<number[],string[]>();
+
+function gcd(a: number, b: number): number {
+  if (!b) {
+    return a;
+  }
+  return gcd(b, a % b);
+}
+let maxHarmonics = map.length;
+alphabet.forEach((freq) => {
+  let antenz = antennas.get(freq);
+  dbg(antenz);
+  for(let i=0;i<antenz.length;i++) {
+    for(let j=0;j<antenz.length;j++) {
+      if (i === j) {
+        continue;
+      }
+      let [a, b] = antenz[i];
+      let [c, d] = antenz[j];
+      let vec = [c-a, d-b];
+      let gcdv = gcd(Math.abs(vec[0]), Math.abs(vec[1]));
+      vec = [vec[0]/gcdv, vec[1]/gcdv];
+      for (let multi = -maxHarmonics; multi < maxHarmonics; multi++) {
+        let antinode = [a - vec[0] * multi, b - vec[1] * multi];
+        if (antinode[0] < 0 || antinode[1] < 0 || antinode[0] >= map.length || antinode[1] >= map[0].length) {
+        } else {
+          dbg(antinode);
+          dbg(freq);
+          let antnz = antinodes2.get(antinode) || [];
+          antinodes2.set(antinode, [...antnz, freq]);
+        }
+      }
+    }
+  }
+});
+
+//dbgMap(dbgAntinodes(antinodes2));
+
+answer(2, antinodes2.count());
