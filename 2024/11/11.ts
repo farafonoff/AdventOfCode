@@ -93,18 +93,14 @@ function blink(stone) {
 
 let ans1 = 0;
 stones.forEach((stone) => {
-  let stonez = [stone];
-  for (let it = 0; it < 25; ++it) {
-    stonez = stonez.flatMap(blink)
-  }
-  ans1 += stonez.length;
+  ans1 += expand(25, stone).length;
 });
 
 answer(1, ans1);
 
-function expand25(stone) {
+function expand(count, stone) {
   let stonez = [stone];
-  for (let it = 0; it < 25; ++it) {
+  for (let it = 0; it < count; ++it) {
     stonez = stonez.flatMap(blink)
   }
   return stonez;
@@ -121,7 +117,7 @@ function solve2() {
       stoneTab.set(stone, stoneTab.get(stone) + 1);
     }
   });
-  for(let top = 0; top < 3;++top) {
+  for(let top = 0; top < 75/5;++top) {
     dbg(`====== ${top} ======`);
     dbg(stoneTab.size)
     let nextMap = new Map();
@@ -130,7 +126,7 @@ function solve2() {
       if (cache.has(stone)) {
         expanded = cache.get(stone);
       } else {
-        expanded = expand25(stone);
+        expanded = expand(5, stone);
         cache.set(stone, expanded);
       }
       expanded.forEach((stone) => {
