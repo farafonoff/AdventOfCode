@@ -142,13 +142,35 @@ function bdv(registers, operand) {
 }
 
 function cdv(registers, operand) {
-  let res = Math.floor(registers.A / 2**combo(registers, operand));
+  let res = Math.floor(registers.A / 2**combo(registers, operand)) % 8;
   registers.C = res;
   return registers;
 }
 
 let ops = [adv, bxl, bst, jnz, bxc, out, bdv, cdv];
+let literal = ['jnz', 'bxl', 'bxc'];
 
+function printCombo(val) {
+  if (val <= 3) return val;
+  else return ['A', 'B', 'C'][val - 4];
+}
+
+function decompile(program) {
+  for(let i=0;i<program.length;i+=2) {
+    let op = program[i];
+    let operand = program[i+1];
+    let opfn = ops[op];
+    let explanations = {
+      'bst': (opr) => `A = ${printCombo(opr)} % 8`,
+      'bxl': (opr) => `B = B ^ ${opr}`,
+      'adv': (opr) => `A = A / 2**${printCombo(opr)}`,
+      'bdv': (opr) => `B = A / 2**${printCombo(opr)}`,
+      'cdv': (opr) => `C = A / 2**${printCombo(opr)}`,
+      'bxc': (opr) => `B = B ^ C`,
+    }
+    console.log(`${i}: ${opfn.name} ${literal.includes(opfn.name) ? operand : printCombo(operand)} // ${explanations[opfn.name] ? explanations[opfn.name](operand) : ''}`);
+  }
+}
 
 contents.forEach((line) => {
   if (line.startsWith('Register')) {
@@ -161,10 +183,10 @@ contents.forEach((line) => {
   }
 });
 
-dbg(registers);
-dbg(program);
+decompile(program);
 
 function runProgram(registers, program) {
+  rezs = [];
   while (registers.pc < program.length) {
     let op = program[registers.pc];
     let operand = program[registers.pc + 1];
@@ -189,7 +211,7 @@ solve1(registers, program);
 
 
 let oseq = [];
-
+/*
 function subProgram(areg1) {
   do {
     let bst = areg1 % 8;
@@ -204,7 +226,7 @@ function subProgram(areg1) {
   } while (areg1 > 0);
   return oseq;
 }
-
+*/
 let candidates = [];
 let rseq = [...program].reverse();
 function brute2(a) {
@@ -212,7 +234,12 @@ function brute2(a) {
     let at = a*8 + next;
     oseq = [];
     DEBUG = false;
-    oseq = subProgram(at);
+    oseq = runProgram({
+      A: at,
+      B: 0,
+      C: 0,
+      pc: 0
+    }, program);
     DEBUG = true;
     let err = oseq.reverse().some((val, idx) => val !== rseq[idx]);
     if (!err) {
@@ -228,7 +255,7 @@ function brute2(a) {
 }
 
 DEBUG = true;
-answer(1, subProgram(61657405).join(','));
+//answer(1, subProgram(61657405).join(','));
 brute2(0);
 
 let uniq = [...new Set(candidates)];
