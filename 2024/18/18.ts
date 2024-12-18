@@ -142,7 +142,19 @@ function solve(initialCount) {
 let ans1 = solve(initialCount-1);
 answer(1, ans1);
 
-for(let i=0;i<poss.length;i++) {
+let lb = 0;
+let ub = poss.length;
+while (ub - lb > 1) {
+  let mid = Math.floor((ub + lb) / 2);
+  let res = solve(mid);
+  if (res === undefined) {
+    ub = mid;
+  } else {
+    lb = mid;
+  }
+}
+
+for(let i=lb;i<=ub;i++) {
   let res = solve(i);
   //console.log({i, res, poss: poss[i]});
   if (res === undefined) {
