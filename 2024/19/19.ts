@@ -87,9 +87,6 @@ contents.forEach((line, idx) => {
   }
 });
 
-dbg(towels)
-dbg(designs)
-
 function solve(design: string, towels: string[]) {
   let cache = new Map();
   function recurse(slice:number) {
@@ -128,7 +125,6 @@ let ans1 = 0;
 let ans2 = 0;
 for(let des of designs) {
   let solvable = solve(des, towels);
-  dbg({des, solvable})
   if (solvable) ans1++;
   ans2 += solvable;
 }
