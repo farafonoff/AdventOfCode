@@ -146,4 +146,4 @@ function solve(cheatTime) {
 }
 //dbg(cheatCounts)
 answer(1, solve(2));
-answer(1, solve(20));
+answer(2, solve(20));
