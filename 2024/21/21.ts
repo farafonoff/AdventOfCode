@@ -139,8 +139,6 @@ function btr(prevmap: HM<[number, number], [number, number]>, ep, sp) {
   return seq;
 }
 
-function dfs(map, sp, ep) {}
-
 let arrows = [
   [null, "^", "A"],
   ["<", "v", ">"],
@@ -171,26 +169,33 @@ contents.forEach((line) => {
 dbg(codes);
 dbg(dcodes);
 
-function findPath(keyboard, sv, ev) {
-  let sp = [];
-  let ep = [];
-  keyboard.forEach((row, ri) => {
+function FindKey(kbd, Key) {
+  let akey = [];
+  kbd.forEach((row, ri) => {
     row.forEach((col, ci) => {
-      if (col === sv) {
-        sp = [ri, ci];
-      }
-      if (col === ev) {
-        ep = [ri, ci];
+      if (col === Key) {
+        akey = [ri, ci];
       }
     });
   });
-  dbg(sp);
-  dbg(ep);
-  let sol = bfs(keyboard, sp, ep);
-  dbg(sol);
-  dbg(sol[2].entries());
-  let dirs = btr(sol[2], ep, sp);
-  return dirs;
+  return akey;
+}
+
+let sp_digits = FindKey(digits, 'A');
+let sp_arrows = FindKey(arrows, 'A');
+let hole_digits = FindKey(digits, null);
+let hole_arrows = FindKey(arrows, null);
+
+function Keys(kbd) {
+  let res = new Set();
+  kbd.forEach(k => {
+    k.forEach(c => {
+      if (c!== null) {
+        res.add(c);
+      }
+    })
+  });
+  return res;
 }
 
 function permute<T>(arr: T[]): T[][] {
@@ -199,6 +204,7 @@ function permute<T>(arr: T[]): T[][] {
     permute([...arr.slice(0, i), ...arr.slice(i + 1)]).map((perm) => [item, ...perm])
   );
 }
+
 
 function findPath1(keyboard, sv, ev) {
   let sp = [];
@@ -262,8 +268,31 @@ function findPath1(keyboard, sv, ev) {
   }
   let pmts = _.uniqWith(permute([...hz, ...vr]), _.isEqual);
   let goods = pmts.filter(check)
-  console.log({goods})
+  goods.sort((a, b) => a.length - b.length);
   return goods;
+}
+
+/*
+function findPath(keyboard, sv, ev) {
+  let sp = [];
+  let ep = [];
+  keyboard.forEach((row, ri) => {
+    row.forEach((col, ci) => {
+      if (col === sv) {
+        sp = [ri, ci];
+      }
+      if (col === ev) {
+        ep = [ri, ci];
+      }
+    });
+  });
+  dbg(sp);
+  dbg(ep);
+  let sol = bfs(keyboard, sp, ep);
+  dbg(sol);
+  dbg(sol[2].entries());
+  let dirs = btr(sol[2], ep, sp);
+  return dirs;
 }
 
 function solve(keyboard, seq: any[]) {
@@ -310,13 +339,6 @@ function solve1(seq: any[]) {
   }
   console.log(shortests[0])
   return shortests[0];
-  
-/*  
-  dbg(k1.join(""));
-  let k2 = solve(arrows, k1);
-  dbg(k2.join(""));
-  DEBUG = true;
-  return k2;*/
 }
 
 let ans1 = 0;
@@ -326,4 +348,196 @@ codes.forEach((codes, ci) => {
   console.log(`${codes.join("")}: ${ans.length} ${ans.join("")}`);
 });
 answer(1, ans1);
+
 //solve1('029A'.split('').map(trnum));
+*/
+
+type Coord = [number, number]
+
+function MHD(a: Coord, b: Coord) {
+  return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
+}
+
+function type(pos, kbd, seq) {
+  let cpos: any = [...pos];
+  let res = [];
+  seq.forEach(sk => {
+    if (_.get(kbd, cpos) === null) {
+      throw 'Hole';
+    }
+    switch(sk) {
+      case "^":
+        cpos = up(cpos);
+        break;
+      case "v":
+        cpos = down(cpos);
+        break;
+      case "<":
+        cpos = left(cpos);
+        break;
+      case ">":
+        cpos = right(cpos);
+        break;
+      case 'A':
+        res.push(_.get(kbd, cpos));
+        break;
+    }
+  })
+  return [res, cpos];
+}
+
+/*
+
+class BFState {
+  pin: string[];
+  entered: string[];
+  pos1: Coord; //digits
+  goal1: Coord;
+  pos2: Coord; //arrows1
+  goal2: Coord;
+  pos3: Coord; //arrows2
+  goal3: Coord;
+  seq: string[];
+  heuristic(): number {
+    if (!this.pin.join("").startsWith(this.entered.join(""))) {
+      return Infinity;
+    }
+    return (
+      27 * MHD(this.pos1, this.goal1) +
+      9 * MHD(this.pos2, this.goal2) +
+      3 * MHD(this.pos3, this.goal3)
+    );
+  }
+  cost(): number {
+    if (this.pin.join("").startsWith(this.entered.join(""))) {
+      return this.seq.length;
+    }
+    return Infinity;
+  }
+  updateGoals() {
+    const nextChar = this.pin[this.entered.length];
+    this.goal1 = findCoord(digits, nextChar);
+    this.goal2 = findCoord(arrows, nextChar);
+    this.goal3 = findCoord(arrows, "A");
+  }
+}
+  */
+
+let res = type(sp_arrows, arrows, '<vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A'.split(''))[0];
+let res1 = type(sp_arrows, arrows, res)[0]
+let res2 = type(sp_digits, digits, res1)[0]
+console.log(res2.join(''));
+
+function typeAll(seq) {
+  let res = type(
+    sp_arrows,
+    arrows,
+    seq
+  );
+  let res1 = type(sp_arrows, arrows, res[0]);
+  let res2 = type(sp_digits, digits, res1[0]);
+  return {
+    res,
+    res1,
+    res2
+  }
+}
+DEBUG = true;
+let dists1 = new HM();
+console.log('===========1')
+for(let i of Keys(arrows)) {
+  for(let j of Keys(arrows)) {
+    if (i === j) {
+      dists1.set([i, j], ['A'])
+    } else {
+      let shortestpath = findPath1(arrows, i, j)[0];
+      let e = [...shortestpath, 'A']
+      dbg({i, j, e})
+      dists1.set([i, j], e)
+    }
+  }
+}
+console.log('===========2')
+let dists2 = new HM();
+function tracePathA(path, dists) {
+  let resPath = [];
+  path.reduce((ov, nv) => {
+    dbg({ov, nv, dp: dists.get([ov, nv])}, 'tracePathA')
+    resPath = [...resPath, ...dists.get([ov, nv])];
+    return nv;
+  }, 'A')
+  dbg(resPath, 'resPath')
+  return resPath;
+}
+for(let i of Keys(arrows)) {
+  for(let j of Keys(arrows)) {
+    if (i === j) {
+      dists2.set([i, j], ['A'])
+    } else {
+      let pathes = findPath1(arrows, i, j);
+      dbg(pathes)
+      let extended = pathes.map(path => tracePathA([...path, 'A'], dists1));
+      extended.sort((a, b) => a.length - b.length);
+      let e = [...extended[0], 'A']
+      dists2.set([i, j], e);
+      dbg({i, j, e})
+    }
+  }
+}
+DEBUG = true;
+console.log('===========3')
+let dists3 = new HM();
+for(let i of Keys(digits)) {
+  for(let j of Keys(digits)) {
+    if (i === j) {
+      dists3.set([i, j], [])
+    } else {
+      let pathes = findPath1(digits, i, j);
+      dbg(pathes)
+      let extended = pathes.map(path => tracePathA([...path, 'A'], dists2));
+      extended.sort((a, b) => a.length - b.length);
+      let e = [...extended[0], 'A']
+      dists3.set([i, j], e);
+      dbg({i, j, e})
+    }
+  }
+}
+console.log('===========l0')
+let distsl0 = new HM();
+for(let i of Keys(digits)) {
+  for(let j of Keys(digits)) {
+    if (i === j) {
+      dists3.set([i, j], [])
+    } else {
+      let pathes = findPath1(digits, i, j);
+      let e = [...pathes[0], 'A']
+      distsl0.set([i, j], e);
+      dbg({i, j, e})
+    }
+  }
+}
+/*let a0 = dists3.get(['A', 0])
+console.log(typeAll(a0), 'A0')*/
+/*
+let ans0 = tracePathA([0, 2, 9, 'A'], dists3);
+console.log(ans0.join(''));
+console.log(JSON.stringify(typeAll(ans0)))
+*/
+console.log('====')
+let seq1 = tracePathA([0, 2, 9, 'A'], distsl0);
+console.log(seq1)
+console.log('=====')
+console.log(JSON.stringify(typeAll('<vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A'.split(''))))
+//console.log(JSON.stringify(typeAll(ans0)))
+// <vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A
+// <vA<A>>^AAvA<^A>AAA<v<A>>^AAvA^AAA
+// <vA<A>>^AAvA<^A>AAA<v<A>>^AAvA^AAA<vA>^AA<v<A>^A>AAvA^AAA<v<A>A>^AAvA<^A>AAA
+/*
+function dfs(typed: string[], nextKey: string, level: number) {
+  let cstate = typeAll(typed);
+  if (level === 0) {
+    let goodKeys = 
+  }
+}
+
+dfs([], '0', 0);*/
