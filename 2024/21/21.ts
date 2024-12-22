@@ -525,7 +525,12 @@ console.log(JSON.stringify(typeAll(ans0)))
 */
 console.log('====')
 let seq1 = tracePathA([0, 2, 9, 'A'], distsl0);
-console.log(seq1)
+let seq2 = tracePathA(seq1, dists1);
+dbg(seq1, 'seq1')
+dbg(seq2, 'seq2')
+let seq3 = tracePathA(seq2, dists1);
+dbg(seq3, 'seq3')
+console.log(JSON.stringify(typeAll(seq3)))
 console.log('=====')
 console.log(JSON.stringify(typeAll('<vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A'.split(''))))
 //console.log(JSON.stringify(typeAll(ans0)))
