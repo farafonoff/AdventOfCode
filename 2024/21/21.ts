@@ -442,7 +442,7 @@ function typeAll(seq) {
     res2
   }
 }
-DEBUG = true;
+DEBUG = false;
 let dists1 = new HM();
 console.log('===========1')
 for(let i of Keys(arrows)) {
@@ -478,13 +478,13 @@ for(let i of Keys(arrows)) {
       dbg(pathes)
       let extended = pathes.map(path => tracePathA([...path, 'A'], dists1));
       extended.sort((a, b) => a.length - b.length);
-      let e = [...extended[0], 'A']
+      let e = [...extended[0]]
       dists2.set([i, j], e);
       dbg({i, j, e})
     }
   }
 }
-DEBUG = true;
+DEBUG = false;
 console.log('===========3')
 let dists3 = new HM();
 for(let i of Keys(digits)) {
@@ -496,7 +496,7 @@ for(let i of Keys(digits)) {
       dbg(pathes)
       let extended = pathes.map(path => tracePathA([...path, 'A'], dists2));
       extended.sort((a, b) => a.length - b.length);
-      let e = [...extended[0], 'A']
+      let e = [...extended[0]]
       dists3.set([i, j], e);
       dbg({i, j, e})
     }
@@ -516,23 +516,36 @@ for(let i of Keys(digits)) {
     }
   }
 }
+
+function solve1(codes) {
+  let ans0 = tracePathA(codes, dists3);
+  return ans0;
+}
+
+let ans1 = 0;
+codes.forEach((codes, ci) => {
+  let ans = solve1(codes);
+  ans1 += ans.length * dcodes[ci];
+  console.log(`${codes.join("")}: ${ans.length} ${ans.join("")}`);
+});
+answer(1, ans1);
 /*let a0 = dists3.get(['A', 0])
 console.log(typeAll(a0), 'A0')*/
-/*
-let ans0 = tracePathA([0, 2, 9, 'A'], dists3);
+
+/*let ans0 = tracePathA([0, 2, 9, 'A'], dists3);
 console.log(ans0.join(''));
 console.log(JSON.stringify(typeAll(ans0)))
-*/
-console.log('====')
-let seq1 = tracePathA([0, 2, 9, 'A'], distsl0);
-let seq2 = tracePathA(seq1, dists1);
+
+console.log('====')*/
+//let seq1 = tracePathA([0, 2, 9, 'A'], distsl0);
+/*let seq2 = tracePathA(seq1, dists1);
 dbg(seq1, 'seq1')
 dbg(seq2, 'seq2')
 let seq3 = tracePathA(seq2, dists1);
 dbg(seq3, 'seq3')
 console.log(JSON.stringify(typeAll(seq3)))
 console.log('=====')
-console.log(JSON.stringify(typeAll('<vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A'.split(''))))
+console.log(JSON.stringify(typeAll('<vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A'.split(''))))*/
 //console.log(JSON.stringify(typeAll(ans0)))
 // <vA<AA>>^AvAA<^A>A<v<A>>^AvA^A<vA>^A<v<A>^A>AAvA^A<v<A>A>^AAAvA<^A>A
 // <vA<A>>^AAvA<^A>AAA<v<A>>^AAvA^AAA
