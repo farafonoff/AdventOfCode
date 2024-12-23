@@ -442,8 +442,20 @@ function typeAll(seq) {
     res2
   }
 }
+
+function tracePathA(path, dists) {
+  let resPath = [];
+  path.reduce((ov, nv) => {
+    dbg({ov, nv, dp: dists.get([ov, nv])}, 'tracePathA')
+    resPath = [...resPath, ...dists.get([ov, nv])];
+    return nv;
+  }, 'A')
+  dbg(resPath, 'resPath')
+  return resPath;
+}
+
 DEBUG = false;
-let dists1 = new HM();
+let dists1 = new HM<any, any>();
 console.log('===========1')
 for(let i of Keys(arrows)) {
   for(let j of Keys(arrows)) {
@@ -459,16 +471,6 @@ for(let i of Keys(arrows)) {
 }
 console.log('===========2')
 let dists2 = new HM();
-function tracePathA(path, dists) {
-  let resPath = [];
-  path.reduce((ov, nv) => {
-    dbg({ov, nv, dp: dists.get([ov, nv])}, 'tracePathA')
-    resPath = [...resPath, ...dists.get([ov, nv])];
-    return nv;
-  }, 'A')
-  dbg(resPath, 'resPath')
-  return resPath;
-}
 for(let i of Keys(arrows)) {
   for(let j of Keys(arrows)) {
     if (i === j) {
@@ -559,3 +561,71 @@ function dfs(typed: string[], nextKey: string, level: number) {
 }
 
 dfs([], '0', 0);*/
+
+function tracePathB(path, dists) {
+  let resPath = 0;
+  path.reduce((ov, nv) => {
+    //dbg({ov, nv, dp: dists.get([ov, nv])}, 'tracePathB')
+    resPath = resPath + dists.get([ov, nv]);
+    return nv;
+  }, 'A')
+  //dbg(resPath, 'resPath')
+  return resPath;
+}
+
+DEBUG = true;
+
+let distsp1 = new HM<any, number>();
+dists1.keys().forEach(kv => {
+  distsp1.set(kv, dists1.get(kv).length)
+})
+
+let matrices = [distsp1];
+
+function nextMatrix(odists, kbd) {
+  let ndists = new HM<any, number>();
+  for(let i of Keys(kbd)) {
+    for(let j of Keys(kbd)) {
+      if (i === j) {
+        ndists.set([i, j], 1)
+      } else {
+        let pathes = findPath1(kbd, i, j);
+        let extended = pathes.map(path => tracePathB([...path, 'A'], odists));
+        extended.sort((a, b) => a - b);
+        let e = extended[0]
+        ndists.set([i, j], e);
+      }
+    }
+  }
+  return ndists;
+}
+
+while(matrices.length < 25) {
+  let lm = _.last(matrices)
+  let nm = nextMatrix(lm, arrows)
+  matrices.push(nm)
+}
+
+let dm1 = nextMatrix(matrices[1], digits);
+let dm25 = nextMatrix(matrices[24], digits);
+
+function solve2(codes, digmat) {
+  let ans0 = tracePathB(codes, digmat);
+  return ans0;
+}
+
+
+let ans21 = 0;
+codes.forEach((codes, ci) => {
+  let ans = solve2(codes, dm1);
+  ans21 += ans * dcodes[ci];
+  // console.log(`${codes.join("")}: ${ans.length} ${ans.join("")}`);
+});
+answer(1, ans21);
+let ans22 = 0;
+codes.forEach((codes, ci) => {
+  let ans = solve2(codes, dm25);
+  ans22 += ans * dcodes[ci];
+  // console.log(`${codes.join("")}: ${ans.length} ${ans.join("")}`);
+});
+answer(2, ans22);
