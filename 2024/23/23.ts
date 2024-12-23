@@ -128,7 +128,7 @@ computerSet.forEach(comp => {
     dbg({comp, parts})
     if (!parts.has(comp)) {
       dbg({comp, parts})
-      if (![...parts].some(part => !linksOf.get(comp).has(part))) {
+      if ([...parts].every(part => linksOf.get(comp).has(part))) {
         parts.add(comp)
         let aparts = [...parts];
         aparts.sort();
