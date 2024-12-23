@@ -136,5 +136,13 @@ let tables = buyerdata.map(buyer => {
 })
 
 //allwindows.entries().forEach(entry => console.log(entry))
-let ans2 = Math.max(...allwindows.values())
-answer(2, ans2)
+//let ans2 = Math.max(...allwindows.values())
+let maxKey, maxValue = -1;
+allwindows.entries().forEach(([k, v]) => {
+  if (v > maxValue)  {
+    maxValue = v;
+    maxKey = k;
+  }
+})
+answer(2, maxValue)
+console.log(maxKey)
