@@ -340,7 +340,7 @@ function findFixes(startBit, swaps: [string, string][]) {
   let badBit = 0;
   let wasLoop = false;
   try {
-    for(let outreg = startBit;outreg<IBITS+1;++outreg) {
+    for(let outreg = 0;outreg<IBITS+1;++outreg) {
       testBits(outreg);
     }
     done = true;
@@ -416,6 +416,7 @@ try {
 }
 
 resultss.forEach(resLine => {
+  console.log(resLine)
   let flat = resLine.flat()
   flat.sort()
   answer(2, flat.join(','))
