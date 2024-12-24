@@ -135,19 +135,34 @@ function calc(sreg) {
   }
 }
 
-
 let zbits = Object.keys(opers).filter(k => k.startsWith('z'))
 zbits.sort()
 //let resbits = []
-let dpow = 1;
-let decimal = 0;
-for(let zbit of zbits) {
-  let cres = calc(zbit);
-  decimal += cres * dpow;
-  dpow *= 2
+function solve_1() {
+  let dpow = 1;
+  let decimal = 0;
+  for(let zbit of zbits) {
+    let cres = calc(zbit);
+    decimal += cres * dpow;
+    dpow *= 2
+  }
+  return decimal  
 }
 
-answer(1, decimal)
+function argToDec(ch) {
+  let dpow = 1;
+  let decimal = 0;
+  let bits = Object.keys(ivals).filter(k => k.startsWith(ch))
+  bits.sort();
+  for(let bit of bits) {
+    let cres = Number(ivals[bit]);
+    decimal += cres * dpow;
+    dpow *= 2
+  }
+  return decimal;
+}
+
+answer(1, solve_1())
 
 function buildLine2(sreg) {
   if (opers[sreg]) {
@@ -324,6 +339,14 @@ function testBits(regN) {
   }
 }
 
+function glorifyAnswer() {
+  let x = argToDec('x');
+  let y = argToDec('y');
+  let res = solve_1();
+  console.log(`${x} + ${y} ${x+y===res?'=':'!='} ${res}`)
+}
+
+
 function subtractSets(setA: Set<string>, setB: Set<string>): Set<string> {
   let result = new Set<string>(setA);
   setB.forEach(item => result.delete(item));
@@ -346,6 +369,7 @@ function findFixes(startBit, swaps: [string, string][]) {
     done = true;
     resultss.push(swaps)
     dbg('========== SUCCESS')
+    glorifyAnswer()
     dbg(swaps)
     // dumpGraph()
   } catch (myError) {
@@ -366,18 +390,11 @@ function findFixes(startBit, swaps: [string, string][]) {
     let allWires = getDependencies(zbits[IBITS + 1])
     let otherWires = subtractSets(allWires, goodWires);
     otherWires = new Set([...otherWires].filter(wr => hasGoodDependencies(wr, badBit)));
-    //let possibleSwaps = []
     dbg(tryWires, 'TRY WIRES')
     dbg(otherWires, 'OTHER WIRES')
     for(let wire of tryWires) {
       for(let owire of otherWires) {
         if (wire !== owire) {
-          /*let hadSwap = swaps.findIndex((sw: [string, string]) => {
-            return _.isEqual(sw, [wire, owire]) || _.isEqual(sw, [owire, wire])
-          })
-          if (hadSwap>=0) {
-            continue;
-          }*/
           let oldSwaps = new Set(swaps.flat())
           if (oldSwaps.has(wire) || oldSwaps.has(owire)) {
             continue
@@ -389,20 +406,6 @@ function findFixes(startBit, swaps: [string, string][]) {
             findFixes(badBit, [...swaps, [wire, owire]])
           } catch (ignoreError) {}
           swap(wire, owire)
-          /*let passed = false;
-          try {
-            //dbg(badBit, 'RETESTING')
-            testBits(badBit)
-            //dbg(badBit, 'RETESTED')
-            passed = true
-            dbg({wire, owire, badBit}, 'SWAP PASSED')
-          } catch(sameError) {
-            //dbg({wire, owire, badBit}, 'BAD SWAP')
-            swap(wire, owire) // swap back
-          }
-          if (passed) {
-            findFixes(badBit, [...swaps, [wire, owire]])
-          }*/
         }
       }
     }
