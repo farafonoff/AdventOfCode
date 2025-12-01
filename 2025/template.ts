@@ -75,55 +75,6 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
-let inp = [];
-  contents.forEach((line) => {
-    const parsed = line.match(/([LR])(\d+)/);
-    if (parsed) {
-      const num = Number(parsed[2]);
-      inp.push([parsed[1], num]);
-    }
-  });
-function solve1() {
-  let iv = 50;
-  let ans = 0;
-  inp.forEach(([dir, num]) => {
-    if (dir === "L") {
-      iv = (100 + iv - num) % 100;
-    } else {
-      iv = (iv + num) % 100;
-    }
-    if (iv === 0) {
-      ++ans;
-    }
-  });
-  return ans;
-};
-
-function solve2() {
-  let iv = 50;
-  let ans = 0;
-  inp.forEach(([dir, num]) => {
-    if (dir === "L") {
-      let wt = Math.floor(num / 100);
-      let rt = num % 100;
-      let nv = iv - rt;
-      let skipZero = iv !== 0 && nv <= 0;
-      let dv = wt + (skipZero ? 1 : 0);
-      dbg(`L ${num} => wt=${wt} rt=${rt} iv=${iv} nv=${nv} dv=${dv}`);
-      ans += dv;
-      iv = (nv + 100) % 100;
-    } else {
-      let wt = Math.floor(num / 100);
-      let rt = num % 100;
-      let nv = iv + rt;
-      let dv = wt + (nv >= 100 ? 1 : 0);
-      dbg(`R ${num} => wt=${wt} rt=${rt} iv=${iv} nv=${nv} dv=${dv}`);
-      ans += dv;
-      iv = nv % 100;
-    }
-  });
-  return ans;
-}
-
-answer(1, solve1());
-answer(2, solve2());
+contents.forEach((line) => {
+  console.log(line);
+});
