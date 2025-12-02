@@ -75,6 +75,51 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
+let ranges = [];
 contents.forEach((line) => {
-  console.log(line);
+  let parts = line.split(",").map(s => s.split("-").map(Number));
+  ranges = ranges.concat(parts.filter(p => p.length == 2).map(p => [p[0], p[1]]));
 });
+let uniqueSet = new Set<number>();
+function countInvalid2(range: number[], times = 2) {
+  let [start, end] = range;
+  let invalid = 0;
+  let isum = 0;
+  let l1 = String(start).length;
+  let l2 = String(end).length;
+  if (l2 > l1) {
+    isum += countInvalid2([start, 10**l1 - 1], times);
+    isum += countInvalid2([10**(l2-1), end], times);
+    return isum;
+  }
+  let l = String(start).length;
+  if (l%times !== 0) {
+    //console.log(`Skip length ${l} range ${start}-${end} for times=${times}`);
+    return 0;
+  }
+  let lp = l / times;
+  let lh = lp * (times - 1);
+  let divisor = 10**lh;
+  let halfStart = Math.floor(start / divisor);
+  let halfEnd = Math.floor(end / divisor);
+  //console.log(`Counting invalid in range ${start}-${end} for times=${times} half ${halfStart}-${halfEnd}`);
+  for (let h = halfStart; h <= halfEnd; ++h) {
+    let invid = Number(String(h).repeat(times));
+    if (invid >= start && invid <= end) {
+      if (uniqueSet.has(invid)) {
+        continue;
+      }
+      uniqueSet.add(invid);
+      ++invalid;
+      isum += invid;
+    }
+  }
+  return isum;
+}
+let a1 = ranges.map(r => countInvalid2(r,2)).reduce((a,b) => a + b, 0);
+answer(1, a1);
+let a2 = a1;
+for(let t = 3; t <= 10; ++t) {
+  a2 += ranges.map(r => countInvalid2(r,t)).reduce((a,b) => a + b, 0);
+}
+answer(2, a2);
