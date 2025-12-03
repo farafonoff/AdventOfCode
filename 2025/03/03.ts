@@ -75,6 +75,35 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
+let banks = []
 contents.forEach((line) => {
-  console.log(line);
+  banks.push(line.split('').map(Number));
 });
+function solve1(b: number[]) {
+  const max = Math.max(...b.slice(0, -1));
+  let idx1 = b.indexOf(max);
+  const max2 = Math.max(...b.slice(idx1 + 1));
+  return max * 10 + max2;
+}
+
+function solveR(b: number[], digits: number) {
+  if (digits === 0) {
+    return 0;
+  }
+  let lastIdx = b.length - digits + 1;
+  const max1 = Math.max(...b.slice(0, lastIdx));
+  const rest = b.slice(b.indexOf(max1) + 1);
+  return max1 * (10 ** (digits - 1)) + solveR(rest, digits - 1);
+}
+
+let a1 = 0;
+banks.forEach((b) => {
+  a1 += solveR(b, 2);
+});
+answer(1, a1);
+
+let a2 = 0;
+banks.forEach((b) => {
+  a2 += solveR(b, 12);
+});
+answer(2, a2);
