@@ -75,6 +75,52 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
+let map = [];
 contents.forEach((line) => {
-  console.log(line);
+  map.push(line.split(""))
 });
+
+function countAdjancent(map, r, c, char) {
+  let count = 0;
+  for(let i=-1; i<=1; i++) {
+    for(let j=-1; j<=1; j++) {
+      if(i === 0 && j === 0) continue;
+      let nr = r + i;
+      let nc = c + j;
+      let pval = _.get(map, [nr, nc], null);
+      if(pval === char) {
+        count++;
+      }
+    }
+  }
+  return count;
+}
+
+function solve1(map) {
+  let ans1 = 0;
+  let nmap = _.cloneDeep(map);
+  map.forEach((line, r) => {
+    line.forEach((char, c) => {
+      if (char === '@') {
+        let rolls = countAdjancent(map, r, c, '@');
+        if (rolls < 4) {
+          ans1++;
+          nmap[r][c] = 'o';
+        }
+      }
+    });
+  });
+  return [ans1, nmap];
+};
+
+answer(1, solve1(map)[0]);
+
+let ans2 = 0;
+while(true) {
+  let [t, nmap] = solve1(map);
+  if(t === 0) break;
+  ans2 += t;
+  map = nmap;
+}
+
+answer(2, ans2);
