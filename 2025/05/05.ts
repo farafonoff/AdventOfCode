@@ -75,6 +75,38 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
+let ranges = [];
+let ids = [];
 contents.forEach((line) => {
-  console.log(line);
+  if (line.trim().length === 0) return;
+  if (line.indexOf('-') >= 0) {
+    let [a,b] = line.split('-').map(Number);
+    ranges.push([a,b]);
+  }
+  else {
+    ids.push(Number(line));
+  }
 });
+
+ranges.sort((a,b) => a[0] - b[0]);
+let ranges2 = [];
+let head = ranges.shift();
+ranges2.push(head);
+ranges.forEach(rng => {
+  if (rng[0] <= head[1] + 1) {
+    head[1] = Math.max(head[1], rng[1]);
+  } else {
+    head = rng;
+    ranges2.push(head);
+  }
+});
+
+let fresh2 = ids.filter(id => ranges2.some(([a,b]) => id >= a && id <= b));
+answer(1, fresh2.length);
+
+let ans2 = 0;
+ranges2.forEach(([a,b]) => {
+  ans2 += (b - a + 1);
+});
+answer(2, ans2);
+//var
