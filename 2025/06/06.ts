@@ -71,10 +71,58 @@ function answer(part, value) {
 var contents = fs
   .readFileSync(infile, "utf8")
   .split("\n")
-  .map((s) => s.trim())
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
+const excel = [];
+let tcols = 0;
 contents.forEach((line) => {
-  console.log(line);
+  tcols = Math.max(line.length, tcols);
+  excel.push(line.split(/[\s]+/).map(s => s.trim()).map(s => trnum(s)));
 });
+let res1 = [];
+for(let i=0;i<excel.length-1;++i) {
+  for(let j=0;j<excel[i].length;++j) {
+    let op = excel[excel.length-1][j];
+    if (op === '+') {
+      let r = res1[j] || 0;
+      r += excel[i][j] as number;
+      res1[j] = r;
+    }
+    if (op === '*') {
+      let r = res1[j] || 1;
+      r *= excel[i][j] as number;
+      res1[j] = r;
+    }
+  }
+}
+let ans1 = res1.reduce((a,b) => a + b, 0);
+answer(1, ans1);
+
+let numberRows = contents.slice(0, -1);
+let operatorRow = contents[contents.length - 1];
+let tempVals = [];
+let answer2 = 0;
+
+for (let i = tcols - 1; i >= 0; --i) {
+  let cnum = [];
+  numberRows.forEach((line) => {
+    cnum.push(line.charAt(i));
+  });
+  let trimmed = cnum.join('').trim();
+  if (trimmed.length === 0) {
+    continue;
+  }
+  const cval = Number(trimmed);
+  tempVals.push(cval);
+  const op = operatorRow.charAt(i);
+  if (op === '+') {
+    answer2 += tempVals.reduce((a, b) => a + b, 0);
+    tempVals = [];
+  }
+  if (op === '*') {
+    answer2 += tempVals.reduce((a, b) => a * b, 1);
+    tempVals = [];
+  }
+}
+answer(2, answer2);
