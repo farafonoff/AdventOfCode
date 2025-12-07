@@ -75,6 +75,38 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
+let mapa = [];
+let scol = -1;
 contents.forEach((line) => {
-  console.log(line);
+  let lsplit = line.split('');
+  mapa.push(lsplit);
+  if (scol === -1) {
+    scol = lsplit.indexOf('S');
+  }
 });
+let bemap = new HM<number, number>();
+bemap.set(scol, 1);
+let ans1 = 0;
+mapa.forEach(mrow => {
+  let splitters = mrow.reduce((acc, val, idx) => {
+    if (val === '^') {
+      acc.push(idx);
+    }
+    return acc;
+  }, []);
+  splitters.forEach(sp => {
+    if (bemap.has(sp)) {
+      ++ans1;
+      let beamValue = bemap.get(sp);
+      bemap.delete(sp);
+      let ovl = bemap.get(sp - 1) || 0;
+      let ovr = bemap.get(sp + 1) || 0;
+      bemap.set(sp - 1, ovl + beamValue);
+      bemap.set(sp + 1, ovr + beamValue);
+    }
+  });
+})
+
+answer(1, ans1);
+let ans2 = bemap.values().reduce((a,b) => a + b, 0);
+answer(2, ans2);
