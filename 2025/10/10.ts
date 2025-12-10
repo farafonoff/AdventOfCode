@@ -3,6 +3,8 @@ import HM from "hashmap";
 import md5 from "js-md5";
 import PQ from "js-priority-queue";
 import _ from "lodash";
+import { init } from "z3-solver";
+const math = require("mathjs");
 const infile = process.argv[2] || "input";
 
 function cached<T extends Function>(fn: T): T {
@@ -75,6 +77,85 @@ var contents = fs
   .filter((s) => s.length > 0);
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.split(/[ \t]/).map(Number));
 //var contents = fs.readFileSync(infile, 'utf8').split("\n").map(s => s.trim()).filter(s => s.length > 0).map(s => s.match(/(\d+)-(\d+) (\w): (\w+)/)); // [orig, g1, g2 ...] = content
+let lightPatterns = [];
+let buttonPatterns = [];
+let joltageRatings = [];
 contents.forEach((line) => {
-  console.log(line);
+  let groups = line.split(' ');
+  lightPatterns.push(groups[0].split('').slice(1,-1).join(''));
+  let buttonGroups = groups.slice(1, -1);
+  let buttonPattern = buttonGroups.map(g => {
+    let bp = g.slice(1,-1).split(',').map(Number);
+    return bp;
+  });
+  buttonPatterns.push(buttonPattern);
+  joltageRatings.push(groups.slice(-1)[0].slice(1,-1).split(',').map(Number));
 });
+
+function solve1(lp, bp) {
+  let solutions = new Map<string, number>();
+  let open = new Set<string>();
+  let initial = '.'.repeat(lp.length);
+  open.add(initial);
+  solutions.set(initial, 0);
+  while(open.size > 0) {
+    let nopen = new Set<string>();
+    for(let key of open) {
+      let value = solutions.get(key);
+      let chars = key.split('');
+      for(let b=0; b<bp.length; b++) {
+        let nchars = [...chars];
+        for(let i=0; i<bp[b].length; i++) {
+          let pos = bp[b][i];
+          nchars[pos] = nchars[pos] === '#' ? '.' : '#';
+        }
+        let nkey = nchars.join('');
+        if (nkey === lp) {
+          return value + 1;
+        }
+        if (!solutions.has(nkey)) {
+          solutions.set(nkey, value + 1);
+          nopen.add(nkey);
+        }
+      }
+    }
+    open = nopen;
+  }
+}
+
+function solve2(jr, bp) {
+  let matrix = [];
+  for(let i=0; i<jr.length; i++) {
+    matrix.push(new Array(jr.length).fill(0));
+  }
+  console.log(bp);
+  for(let b=0; b<bp.length; b++) {
+    for(let i=0; i<bp[b].length; i++) {
+      matrix[bp[b][i]][b] = 1;
+    }
+  }
+  console.log(jr, matrix)
+  const solution = math.lusolve(matrix, jr);
+  console.log('Solution:', solution);
+  return 0;
+}
+
+let ans1 = 0;
+lightPatterns.forEach((lp, idx) => {
+  let bp = buttonPatterns[idx];
+  let jr = joltageRatings[idx];
+  let p1 = solve1(lp, bp);
+  console.log(`Pattern ${idx + 1}: ${p1} presses`);
+  ans1 += p1;
+});
+answer(1, ans1);
+
+let ans2 = 0;
+lightPatterns.forEach((lp, idx) => {
+  let bp = buttonPatterns[idx];
+  let jr = joltageRatings[idx];
+  let p2 = solve2(jr, bp);
+  console.log(`Pattern ${idx + 1}: ${p2} presses`);
+  ans2 += p2;
+});
+answer(2, ans2);
