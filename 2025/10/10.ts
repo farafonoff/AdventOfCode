@@ -3,6 +3,7 @@ import HM from "hashmap";
 import md5 from "js-md5";
 import PQ from "js-priority-queue";
 import _ from "lodash";
+import { exit } from "process";
 import { init } from "z3-solver";
 const infile = process.argv[2] || "input";
 
@@ -197,4 +198,5 @@ answer(1, ans1);
     ans2 += p2;
   }
   answer(2, ans2);
+  exit(0);
 })();
